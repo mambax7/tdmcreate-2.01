@@ -9,12 +9,13 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 use Xoops\Core\Request;
 
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.6.0
@@ -23,7 +24,7 @@ use Xoops\Core\Request;
  *
  * @version         $Id: imports.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include __DIR__.'/header.php';
+include __DIR__ . '/header.php';
 // Get $_POST, $_GET, $_REQUEST
 $op = Request::getCmd('op', 'list');
 $start = Request::getInt('start', 0);
@@ -31,15 +32,15 @@ $start = Request::getInt('start', 0);
 $limit = $helper->getConfig('adminpager');
 // heaser
 $xoops->header('admin:tdmcreate/tdmcreate_imports.tpl');
-//
+
 $importId = Request::getInt('import_id');
-//
+
 $adminMenu->renderNavigation('imports.php');
-//
+
 switch ($op) {
     case 'list':
-        $adminMenu->addTips(TDMCreateLocale::IMPORT_TIPS);
-        $adminMenu->addItemButton(TDMCreateLocale::IMPORT_OLD_MODULE, 'imports.php?op=new', 'add');
+        $adminMenu->addTips(Tdmcreate\Locale::IMPORT_TIPS);
+        $adminMenu->addItemButton(Tdmcreate\Locale::IMPORT_OLD_MODULE, 'imports.php?op=new', 'add');
         $adminMenu->renderTips();
         $adminMenu->renderButton();
         // Get modules list
@@ -60,19 +61,17 @@ switch ($op) {
                 $xoops->tpl()->assign('pagenav', $nav->renderNav(4));
             }
         } else {
-            $xoops->tpl()->assign('error_message', TDMCreateLocale::E_NO_IMPORTS);
+            $xoops->tpl()->assign('error_message', Tdmcreate\Locale::E_NO_IMPORTS);
         }
-    break;
-
+        break;
     case 'new':
-        $adminMenu->addItemButton(TDMCreateLocale::IMPORTED_LIST, 'imports.php', 'application-view-detail');
+        $adminMenu->addItemButton(Tdmcreate\Locale::IMPORTED_LIST, 'imports.php', 'application-view-detail');
         $adminMenu->renderButton();
 
         $importsObj = $importsHandler->create();
         $form = $xoops->getModuleForm($importsObj, 'imports');
         $xoops->tpl()->assign('form', $form->render());
-    break;
-
+        break;
     case 'save':
         if (!$xoops->security()->check()) {
             $xoops->redirect('modules.php', 3, implode(',', $xoops->security()->getErrors()));
@@ -94,7 +93,7 @@ switch ($op) {
             $importsObj->setVar('import_mid', $_POST['import_mid']);
             $files = $_FILES['importfile'];
             // If incoming data have been entered correctly
-            if ($_POST['upload'] == XoopsLocale::A_SUBMIT && isset($files['tmp_name']) && (substr($files['name'], -4) == '.sql')) {
+            if (XoopsLocale::A_SUBMIT == $_POST['upload'] && isset($files['tmp_name']) && ('.sql' == mb_substr($files['name'], -4))) {
                 // File recovery
                 $dir = TDMC_UPLOAD_PATH_FILES;
                 $file = $_FILES['importfile'];
@@ -103,28 +102,29 @@ switch ($op) {
                 if (is_uploaded_file($tmpName)) {
                     readfile($tmpName);
                     // The directory where you saved the file
-                    if ($file['error'] == UPLOAD_ERR_OK) {
-                        if (move_uploaded_file($tmpName, $dir.'/'.$file['name']));
-                        $xoops->redirect('imports.php', 3, sprintf(TDMCreateLocale::E_FILE_UPLOADING, $file['name']));
+                    if (UPLOAD_ERR_OK == $file['error']) {
+                        if (move_uploaded_file($tmpName, $dir . '/' . $file['name'])) {
+                        }
+                        $xoops->redirect('imports.php', 3, sprintf(Tdmcreate\Locale::E_FILE_UPLOADING, $file['name']));
                     }
                 } else {
-                    $xoops->redirect('imports.php', 3, sprintf(TDMCreateLocale::E_FILE_NOT_UPLOADING, $tmpName));
+                    $xoops->redirect('imports.php', 3, sprintf(Tdmcreate\Locale::E_FILE_NOT_UPLOADING, $tmpName));
                 }
 
                 // Copies data in the db
-                $filename = $dir.'/'.$file['name'];
+                $filename = $dir . '/' . $file['name'];
                 // File size
                 $filesize = $files['size'];
                 // Check that the file was inserted and that there is
-                if (($handle = fopen($filename, 'r')) !== false) {
+                if (false !== ($handle = fopen($filename, 'r'))) {
                     // File reading until at the end
                     while (!feof($handle)) {
                         $buffer = fgets($handle, filesize($filename));
-                        if (strlen($buffer) > 1) {
+                        if (mb_strlen($buffer) > 1) {
                             // search all comments
-                            $search = array('/\/\*.*(\n)*.*(\*\/)?/', '/\s*--.*\n/', '/\s*#.*\n/');
+                            $search = ['/\/\*.*(\n)*.*(\*\/)?/', '/\s*--.*\n/', '/\s*#.*\n/'];
                             // and replace with null
-                            $replace = array("\n");
+                            $replace = ["\n"];
                             $buffer = preg_replace($search, $replace, $buffer);
                             $buffer = str_replace('`', '', $buffer);
                             $buffer = str_replace(',', '', $buffer);
@@ -134,18 +134,18 @@ switch ($op) {
                                 array_push($resultTable, $tableMatch[5][0]);
                             }
                         } else {
-                            $xoops->redirect('imports.php', 3, sprintf(TDMCreateLocale::E_SQL_FILE_DATA_NOT_MATCH, $buffer));
+                            $xoops->redirect('imports.php', 3, sprintf(Tdmcreate\Locale::E_SQL_FILE_DATA_NOT_MATCH, $buffer));
                         }
                     }
 
                     // Insert query
-                    if (strlen($resultTable[0]) > 0) {
+                    if (mb_strlen($resultTable[0]) > 0) {
                         $t = 0;
                         foreach (array_keys($resultTable) as $table) {
                             $importsObj->setVar('import_tablename', $resultTable[$table]); //$_POST['import_tablename']
                             $importsObj->setVar('import_nbtables', $t);
                             ++$t;    //$_POST['import_nbtables']
-                            if (strlen($resultTable[0]) > 0) {
+                            if (mb_strlen($resultTable[0]) > 0) {
                                 $f = 0;
                                 foreach (array_keys($resultFields) as $field) {
                                     $importsObj->setVar('import_nbfields', $f);
@@ -158,53 +158,51 @@ switch ($op) {
                         unset($t);
                     }
                 } else {
-                    $xoops->redirect('imports.php', 3, TDMCreateLocale::E_FILE_NOT_OPEN_READING);
+                    $xoops->redirect('imports.php', 3, Tdmcreate\Locale::E_FILE_NOT_OPEN_READING);
                 }
-                $xoops->redirect('imports.php', 3, TDMCreateLocale::S_DATA_ENTERED);
+                $xoops->redirect('imports.php', 3, Tdmcreate\Locale::S_DATA_ENTERED);
                 fclose($handle);
             } else {
-                $xoops->redirect('imports.php', 3, TDMCreateLocale::E_DATABASE_SQL_FILE_NOT_IMPORTED);
+                $xoops->redirect('imports.php', 3, Tdmcreate\Locale::E_DATABASE_SQL_FILE_NOT_IMPORTED);
             }
         }
 
         if ($importsHandler->insert($importsObj)) {
-            $xoops->redirect('imports.php', 3, TDMCreateLocale::FORM_OK);
+            $xoops->redirect('imports.php', 3, Tdmcreate\Locale::FORM_OK);
         }
 
         $xoops->error($importsObj->getHtmlErrors());
         $form = $xoops->getModuleForm($importsObj, 'import');
         $xoops->tpl()->assign('form', $form->render());
-    break;
-
+        break;
     case 'edit':
-        $adminMenu->addItemButton(TDMCreateLocale::IMPORT_OLD_MODULE, 'imports.php?op=import', 'add');
-        $adminMenu->addItemButton(TDMCreateLocale::IMPORTED_LIST, 'imports.php', 'application-view-detail');
+        $adminMenu->addItemButton(Tdmcreate\Locale::IMPORT_OLD_MODULE, 'imports.php?op=import', 'add');
+        $adminMenu->addItemButton(Tdmcreate\Locale::IMPORTED_LIST, 'imports.php', 'application-view-detail');
         $adminMenu->renderButton();
 
         $importsObj = $importsHandler->get($importId);
         $form = $xoops->getModuleForm($importsObj, 'import');
         $xoops->tpl()->assign('form', $form->render());
-    break;
-
+        break;
     case 'delete':
         if ($importId > 0) {
             $importsObj = $importsHandler->get($importId);
-            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+            if (isset($_POST['ok']) && 1 == $_POST['ok']) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('imports.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($importsHandler->delete($importsObj)) {
-                    $xoops->redirect('imports.php', 2, sprintf(TDMCreateLocale::S_DELETED, TDMCreateLocale::IMPORT));
+                    $xoops->redirect('imports.php', 2, sprintf(Tdmcreate\Locale::S_DELETED, Tdmcreate\Locale::IMPORT));
                 } else {
                     $xoops->error($importsObj->getHtmlErrors());
                 }
             } else {
-                $xoops->confirm(array('ok' => 1, 'id' => $importId, 'op' => 'delete'), 'imports.php', sprintf(TDMCreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $importsObj->getVar('import_name')).'<br />');
+                $xoops->confirm(['ok' => 1, 'id' => $importId, 'op' => 'delete'], 'imports.php', sprintf(Tdmcreate\Locale::QF_ARE_YOU_SURE_TO_DELETE, $importsObj->getVar('import_name')) . '<br />');
             }
         } else {
-            $xoops->redirect('imports.php', 1, TDMCreateLocale::E_DATABASE_ERROR);
+            $xoops->redirect('imports.php', 1, Tdmcreate\Locale::E_DATABASE_ERROR);
         }
-    break;
+        break;
 }
 
-include __DIR__.'/footer.php';
+include __DIR__ . '/footer.php';

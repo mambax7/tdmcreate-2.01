@@ -12,7 +12,7 @@
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.5.5
@@ -21,12 +21,12 @@
  *
  * @version         $Id: 1.59 settings.php 11297 2013-03-24 10:58:10Z timgno $
  */
-include __DIR__.'/header.php';
+include __DIR__ . '/header.php';
 // Recovered value of argument op in the URL $
 $op = XoopsRequest::getString('op', 'list');
-//
+
 $setId = XoopsRequest::getInt('set_id');
-//
+
 switch ($op) {
     case 'list':
     default:
@@ -41,7 +41,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('buttons', $adminMenu->renderButton());
         $GLOBALS['xoopsTpl']->assign('tdmc_upload_imgmod_url', TDMC_UPLOAD_IMGMOD_URL);
         $GLOBALS['xoopsTpl']->assign('tdmc_url', TDMC_URL);
-        $GLOBALS['xoopsTpl']->assign('modPathIcon16', TDMC_URL.'/'.$modPathIcon16);
+        $GLOBALS['xoopsTpl']->assign('modPathIcon16', TDMC_URL . '/' . $modPathIcon16);
         $GLOBALS['xoopsTpl']->assign('sysPathIcon32', $sysPathIcon32);
         $settingsCount = $tdmcreate->getHandler('settings')->getCountSettings();
         $settingsAll = $tdmcreate->getHandler('settings')->getAllSettings($start, $limit);
@@ -53,8 +53,8 @@ switch ($op) {
                 unset($setting);
             }
             if ($settingsCount > $limit) {
-                include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-                $pagenav = new XoopsPageNav($settingsCount, $limit, $start, 'start', 'op=list&limit='.$limit);
+                include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+                $pagenav = new XoopsPageNav($settingsCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav(4));
             }
         } else {
@@ -82,52 +82,53 @@ switch ($op) {
         } else {
             $settingsObj = &$tdmcreate->getHandler('settings')->create();
         }
-        $setModuleDirname = preg_replace('/[^a-zA-Z0-9]\s+/', '', strtolower($_POST['set_dirname']));
+        $setModuleDirname = preg_replace('/[^a-zA-Z0-9]\s+/', '', mb_strtolower($_POST['set_dirname']));
         //Form module save
-        $settingsObj->setVars(array(
-                                 'set_name' => $_POST['set_name'],
-                                 'set_dirname' => $setModuleDirname,
-                                 'set_version' => $_POST['set_version'],
-                                 'set_since' => $_POST['set_since'],
-                                 'set_min_php' => $_POST['set_min_php'],
-                                 'set_min_xoops' => $_POST['set_min_xoops'],
-                                 'set_min_admin' => $_POST['set_min_admin'],
-                                 'set_min_mysql' => $_POST['set_min_mysql'],
-                                 'set_description' => $_POST['set_description'],
-                                 'set_author' => $_POST['set_author'],
-                                 'set_author_mail' => $_POST['set_author_mail'],
-                                 'set_author_website_url' => $_POST['set_author_website_url'],
-                                 'set_author_website_name' => $_POST['set_author_website_name'],
-                                 'set_credits' => $_POST['set_credits'],
-                                 'set_license' => $_POST['set_license'],
-                                 'set_release_info' => $_POST['set_release_info'],
-                                 'set_release_file' => $_POST['set_release_file'],
-                                 'set_manual' => $_POST['set_manual'],
-                                 'set_manual_file' => $_POST['set_manual_file'], ));
+        $settingsObj->setVars([
+                                  'set_name' => $_POST['set_name'],
+                                  'set_dirname' => $setModuleDirname,
+                                  'set_version' => $_POST['set_version'],
+                                  'set_since' => $_POST['set_since'],
+                                  'set_min_php' => $_POST['set_min_php'],
+                                  'set_min_xoops' => $_POST['set_min_xoops'],
+                                  'set_min_admin' => $_POST['set_min_admin'],
+                                  'set_min_mysql' => $_POST['set_min_mysql'],
+                                  'set_description' => $_POST['set_description'],
+                                  'set_author' => $_POST['set_author'],
+                                  'set_author_mail' => $_POST['set_author_mail'],
+                                  'set_author_website_url' => $_POST['set_author_website_url'],
+                                  'set_author_website_name' => $_POST['set_author_website_name'],
+                                  'set_credits' => $_POST['set_credits'],
+                                  'set_license' => $_POST['set_license'],
+                                  'set_release_info' => $_POST['set_release_info'],
+                                  'set_release_file' => $_POST['set_release_file'],
+                                  'set_manual' => $_POST['set_manual'],
+                                  'set_manual_file' => $_POST['set_manual_file'],
+                              ]);
         //Form set_image
         $settingsObj->setVar('set_image', $_POST['set_image']);
         //Form module save
-        $settingsObj->setVars(array(
-                                 'set_demo_site_url' => $_POST['set_demo_site_url'],
-                                 'set_demo_site_name' => $_POST['set_demo_site_name'],
-                                 'set_support_url' => $_POST['set_support_url'],
-                                 'set_support_name' => $_POST['set_support_name'],
-                                 'set_website_url' => $_POST['set_website_url'],
-                                 'set_website_name' => $_POST['set_website_name'],
-                                 'set_release' => $_POST['set_release'],
-                                 'set_status' => $_POST['set_status'],
-                                 'set_donations' => $_POST['set_donations'],
-                                 'set_subversion' => $_POST['set_subversion'], )
-        );
-        $settingOption = XoopsRequest::getArray('setting_option', array());
-        $settingsObj->setVar('set_admin', in_array('admin', $settingOption));
-        $settingsObj->setVar('set_user', in_array('user', $settingOption));
-        $settingsObj->setVar('set_blocks', in_array('blocks', $settingOption));
-        $settingsObj->setVar('set_search', in_array('search', $settingOption));
-        $settingsObj->setVar('set_comments', in_array('comments', $settingOption));
-        $settingsObj->setVar('set_notifications', in_array('notifications', $settingOption));
-        $settingsObj->setVar('set_permissions', in_array('permissions', $settingOption));
-        $settingsObj->setVar('set_inroot_copy', in_array('inroot', $settingOption));
+        $settingsObj->setVars([
+                                  'set_demo_site_url' => $_POST['set_demo_site_url'],
+                                  'set_demo_site_name' => $_POST['set_demo_site_name'],
+                                  'set_support_url' => $_POST['set_support_url'],
+                                  'set_support_name' => $_POST['set_support_name'],
+                                  'set_website_url' => $_POST['set_website_url'],
+                                  'set_website_name' => $_POST['set_website_name'],
+                                  'set_release' => $_POST['set_release'],
+                                  'set_status' => $_POST['set_status'],
+                                  'set_donations' => $_POST['set_donations'],
+                                  'set_subversion' => $_POST['set_subversion'],
+                              ]);
+        $settingOption = XoopsRequest::getArray('setting_option', []);
+        $settingsObj->setVar('set_admin', in_array('admin', $settingOption, true));
+        $settingsObj->setVar('set_user', in_array('user', $settingOption, true));
+        $settingsObj->setVar('set_blocks', in_array('blocks', $settingOption, true));
+        $settingsObj->setVar('set_search', in_array('search', $settingOption, true));
+        $settingsObj->setVar('set_comments', in_array('comments', $settingOption, true));
+        $settingsObj->setVar('set_notifications', in_array('notifications', $settingOption, true));
+        $settingsObj->setVar('set_permissions', in_array('permissions', $settingOption, true));
+        $settingsObj->setVar('set_inroot_copy', in_array('inroot', $settingOption, true));
 
         $settingsObj->setVar('set_type', $_POST['set_type']);
 
@@ -162,7 +163,7 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('error', $settingsObj->getHtmlErrors());
             }
         } else {
-            xoops_confirm(array('ok' => 1, 'set_id' => $setId, 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMCREATE_FORMSUREDEL, $settingsObj->getVar('set_name')));
+            xoops_confirm(['ok' => 1, 'set_id' => $setId, 'op' => 'delete'], $_SERVER['REQUEST_URI'], sprintf(_AM_TDMCREATE_FORMSUREDEL, $settingsObj->getVar('set_name')));
         }
         break;
     case 'display':
@@ -177,4 +178,4 @@ switch ($op) {
         }
         break;
 }
-include __DIR__.'/footer.php';
+include __DIR__ . '/footer.php';

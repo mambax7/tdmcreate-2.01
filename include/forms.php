@@ -13,7 +13,7 @@
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.6.0
@@ -22,7 +22,7 @@
  *
  * @version         $Id: forms.php 10665 2012-12-27 10:14:15Z timgno $
  */
-defined('XOOPS_ROOT_PATH') or die('XOOPS root path not defined');
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 /**
  * Get {@link XoopsThemeForm} for editing a user.
@@ -35,7 +35,7 @@ function tdmcreate_getBuildingForm($action = false)
 {
     $xoops = Xoops::getInstance();
 
-    if ($action === false) {
+    if (false === $action) {
         $action = $_SERVER['REQUEST_URI'];
     }
 

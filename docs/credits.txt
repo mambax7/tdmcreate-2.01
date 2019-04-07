@@ -1,4 +1,7 @@
-Read Me First
+CREDITS
 =============
 
-Please make sure that you download the XOOPS Icon Set, and upload it to uploads/images directory
+Originally developed by the TDM Team.
+Modified for XOOPS 2.6.0 by Timgno
+
+Contributors: Mamba

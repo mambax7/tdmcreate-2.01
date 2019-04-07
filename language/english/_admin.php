@@ -13,7 +13,7 @@
 /*
  * tdmcreate module
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         tdmcreate
  * @since           2.6.0
@@ -32,7 +32,6 @@
 //define("_AM_TDMCREATE_STATISTICS", "Statistics");
 //define("_AM_TDMCREATE_THEREARE_NUMMODULES", "&#45; %s modules stored in the Database");
 //define("_AM_TDMCREATE_THEREARE_NUMTABLES", "&#45; %s tables stored in the Database");
-
 
 // Index Admin
 //define("_AM_TDMCREATE_INDEX_NMTOTAL", "There are %s modules in the Database");

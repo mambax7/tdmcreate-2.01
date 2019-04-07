@@ -12,7 +12,7 @@
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.6.0
@@ -21,22 +21,32 @@
  *
  * @version         $Id: header.php 10665 2012-12-27 10:14:15Z timgno $
  */
-require_once dirname(dirname(dirname(__DIR__))).'/include/cp_header.php';
+
+use XoopsModules\Tdmcreate;
+
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+
+require dirname(__DIR__) . '/preloads/autoloader.php';
+
 // Get main instance
 XoopsLoad::load('system', 'system');
-$system = System::getInstance();
-//
-$helper = Xoops\Module\Helper::getHelper('tdmcreate');
-$xoops = $helper->xoops();
+$system = \System::getInstance();
+
+$helper = XoopsModules\Tdmcreate\Helper::getInstance();
+
+$xoops = Xoops::getInstance();
+$xoops->loadLocale();
+
+
 // Load local libraries
-XoopsLoad::loadFile($xoops->path(dirname(__DIR__).'/include/common.php'));
-XoopsLoad::loadFile($xoops->path(dirname(__DIR__).'/include/functions.php'));
+XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/common.php'));
+XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/functions.php'));
 // Get handler
-$modulesHandler = $helper->getModulesHandler();
-$tablesHandler = $helper->getTablesHandler();
-$fieldsHandler = $helper->getFieldsHandler();
-$localesHandler = $helper->getLocalesHandler();
-$importsHandler = $helper->getImportsHandler();
+$modulesHandler = new  \XoopsModules\Tdmcreate\ModulesHandler(); //$helper->getModulesHandler();
+$tablesHandler =  new  \XoopsModules\Tdmcreate\TablesHandler(); //$helper->getTablesHandler();
+$fieldsHandler =  new  \XoopsModules\Tdmcreate\FieldsHandler(); //$helper->getFieldsHandler();
+$localesHandler =  new  \XoopsModules\Tdmcreate\LocalesHandler(); //$helper->getLocalesHandler();
+$importsHandler =  new  \XoopsModules\Tdmcreate\ImportsHandler(); //$helper->getImportsHandler();
 // Add Script
 $xoops->theme()->addScript('media/xoops/xoops.js');
 $xoops->theme()->addScript('modules/system/js/admin.js');

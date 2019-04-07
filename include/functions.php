@@ -13,7 +13,7 @@
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.6.0
@@ -21,8 +21,8 @@
  * @author          Timgno <txmodxoops@gmail.com>
  *
  * @version         $Id: functions.php 10665 2012-12-27 10:14:15Z timgno $
+ * @param mixed $folder
  */
-
 function tdmcreateClearDir($folder)
 {
     $opening = @opendir($folder);
@@ -30,16 +30,16 @@ function tdmcreateClearDir($folder)
         return;
     }
     while ($file = readdir($opening)) {
-        if ($file == '.' || $file == '..') {
+        if ('.' == $file || '..' == $file) {
             continue;
         }
-        if (is_dir($folder.'/'.$file)) {
-            $r = tdmcreateClearDir($folder.'/'.$file);
+        if (is_dir($folder . '/' . $file)) {
+            $r = tdmcreateClearDir($folder . '/' . $file);
             if (!$r) {
                 return false;
             }
         } else {
-            $r = @unlink($folder.'/'.$file);
+            $r = @unlink($folder . '/' . $file);
             if (!$r) {
                 return false;
             }
@@ -57,14 +57,13 @@ function tdmcreateClearDir($folder)
 /**
  * Copy a file, or a folder and its contents.
  *
- * @author      Aidan Lister <aidan@php.net>
- *
- * @version     1.0.0
- *
- * @param       string   $source    The source
- * @param       string   $dest      The destination
+ * @param string $source The source
+ * @param string $dest   The destination
  *
  * @return      bool     Returns true on success, false on failure
+ * @version     1.0.0
+ *
+ * @author      Aidan Lister <aidan@php.net>
  */
 function tdmcreateCopyRight($source, $dest)
 {
@@ -80,7 +79,7 @@ function tdmcreateCopyRight($source, $dest)
     $dir = dir($source);
     while (false !== $entry = $dir->read()) {
         // Skip pointers
-        if ($entry == '.' || $entry == '..') {
+        if ('.' == $entry || '..' == $entry) {
             continue;
         }
         // Deep copy directories
@@ -95,8 +94,8 @@ function tdmcreateCopyRight($source, $dest)
 
     return true;
 }
-//
+
 function UcFirstAndToLower($str)
 {
-    return ucfirst(strtolower(trim($str)));
+    return ucfirst(mb_strtolower(trim($str)));
 }

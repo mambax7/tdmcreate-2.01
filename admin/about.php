@@ -13,7 +13,7 @@
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.6.0
@@ -22,10 +22,10 @@
  *
  * @version         $Id: about.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include __DIR__.'/header.php';
+include __DIR__ . '/header.php';
 $xoops->header();
 // About
 $adminMenu->displayNavigation('about.php');
 $adminMenu->displayAbout(true);
 
-include __DIR__.'/footer.php';
+include __DIR__ . '/footer.php';

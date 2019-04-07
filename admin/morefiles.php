@@ -12,7 +12,7 @@
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.5.5
@@ -21,12 +21,12 @@
  *
  * @version         $Id: 1.59 morefiles.php 11297 2013-03-24 10:58:10Z timgno $
  */
-include __DIR__.'/header.php';
+include __DIR__ . '/header.php';
 // Recovered value of argument op in the URL $
 $op = XoopsRequest::getString('op', 'list');
-//
+
 $fileId = XoopsRequest::getInt('file_id');
-//
+
 switch ($op) {
     case 'list':
     default:
@@ -58,15 +58,14 @@ switch ($op) {
                 unset($files);
             }
             if ($morefilesCount > $limit) {
-                include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-                $pagenav = new XoopsPageNav($morefilesCount, $limit, $start, 'start', 'op=list&limit='.$limit);
+                include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+                $pagenav = new XoopsPageNav($morefilesCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
                 $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav(4));
             }
         } else {
             $GLOBALS['xoopsTpl']->assign('error', _AM_TDMCREATE_THEREARENT_MORE_FILES);
         }
         break;
-
     case 'new':
         // Define main template
         $templateMain = 'tdmcreate_morefiles.tpl';
@@ -79,7 +78,6 @@ switch ($op) {
         $form = $morefilesObj->getFormMoreFiles();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
-
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('morefiles.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -90,11 +88,12 @@ switch ($op) {
             $morefilesObj = &$tdmcreate->getHandler('morefiles')->create();
         }
         // Form file save
-        $morefilesObj->setVars(array(
-                                 'file_mid' => $_POST['file_mid'],
-                                 'file_name' => $_POST['file_name'],
-                                 'file_extension' => $_POST['file_extension'],
-                                 'file_infolder' => $_POST['file_infolder'], ));
+        $morefilesObj->setVars([
+                                   'file_mid' => $_POST['file_mid'],
+                                   'file_name' => $_POST['file_name'],
+                                   'file_extension' => $_POST['file_extension'],
+                                   'file_infolder' => $_POST['file_infolder'],
+                               ]);
 
         if ($tdmcreate->getHandler('morefiles')->insert($morefilesObj)) {
             if ($morefilesObj->isNew()) {
@@ -108,7 +107,6 @@ switch ($op) {
         $form = &$morefilesObj->getFormMoreFiles();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
-
     case 'edit':
         // Define main template
         $templateMain = 'tdmcreate_morefiles.tpl';
@@ -122,7 +120,6 @@ switch ($op) {
         $form = $morefilesObj->getFormMoreFiles();
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
-
     case 'delete':
         $morefilesObj = &$tdmcreate->getHandler('morefiles')->get($fileId);
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
@@ -135,9 +132,9 @@ switch ($op) {
                 $GLOBALS['xoopsTpl']->assign('error', $morefilesObj->getHtmlErrors());
             }
         } else {
-            xoops_confirm(array('ok' => 1, 'file_id' => $fileId, 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_TDMCREATE_FORM_SURE_DELETE, $morefilesObj->getVar('file_name')));
+            xoops_confirm(['ok' => 1, 'file_id' => $fileId, 'op' => 'delete'], $_SERVER['REQUEST_URI'], sprintf(_AM_TDMCREATE_FORM_SURE_DELETE, $morefilesObj->getVar('file_name')));
         }
         break;
 }
 
-include __DIR__.'/footer.php';
+include __DIR__ . '/footer.php';

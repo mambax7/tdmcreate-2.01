@@ -12,7 +12,7 @@
 /**
  * tdmcreate module.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  *
  * @since           2.6.0
@@ -21,7 +21,11 @@
  *
  * @version         $Id: en_US.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
+
+use XoopsModules\Tdmcreate;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 /**
  * Naming conventions
  * - All translations must be enclosed with ""
@@ -46,7 +50,7 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
  *      Config keys are stored in database, try to make them as short as possible!
  *   _DESC Description, append this for configs description.
  */
-class TDMCreateLocaleEn_US /*extends XoopsLocaleEn_US*/
+class LocaleEn_US /*extends \XoopsLocaleEn_US*/
 {
     const A_ADD_EXTENSION = 'Add Extension';
     const A_ADD_LOCALE = 'Add Locale';
