@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,20 +21,17 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: admin.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-class Admin extends File
+class Admin extends Tdmcreate\File
 {
     /**
      * File.
      *
-     * @var array of {@link TDMCreateFile} objects
+     * @var array of {@link TDMCreate\File} objects
      */
     protected $adminFile = [];
 
@@ -67,11 +66,11 @@ class Admin extends File
     /**
      * Constructor.
      *
-     * @param TDMCreateFile|null $file
+     * @param TDMCreate\File|null $file
      * @param string             $module
      * @param mixed              $text
      */
-    public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
+    public function __construct(TDMCreate\File $file = null, $module = '', $text = '')
     {
         if (isset($file)) {
             $this->create($file, $module);
@@ -80,12 +79,12 @@ class Admin extends File
     }
 
     /**
-     * @param TDMCreateFile $adminFile
+     * @param TDMCreate\File $adminFile
      * @param string        $module
      *
-     * @return TDMCreateFile
+     * @return \XoopsModules\Tdmcreate\Files\Admin
      */
-    public function create(TDMCreateFile $adminFile, $module = '')
+    public function create(TDMCreate\File $adminFile, $module = '')
     {
         $this->adminFile[] = $adminFile;
         $this->module[] = $module;
@@ -102,22 +101,23 @@ class Admin extends File
      */
     public function adminHeader($module = null, $module_name = null, $tables_arr = [])
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
-        $this->text[] = 'require_once dirname(dirname(dirname(dirname(__FILE__)))) . \'/include/cp_header.php\';';
-        $this->text[] = 'include_once dirname(dirname(__FILE__)) . \'/include/common.php\';';
-        $this->text[] = 'include_once dirname(dirname(__FILE__)) . \'/include/functions.php\';';
+        $this->text[] = 'require_once dirname(dirname(dirname(__DIR__))) . \'/include/cp_header.php\';';
+        $this->text[] = 'require_once dirname(__DIR__) . \'/include/common.php\';';
+        $this->text[] = 'require_once dirname(__DIR__) . \'/include/functions.php\';';
         $this->text[] = '// Get main instance';
         $this->text[] = 'XoopsLoad::load(\'system\', \'system\');';
         $this->text[] = '$system = \System::getInstance();';
         $this->text[] = '// Get main locale instance';
-        $this->text[] = '$xoops = Xoops::getInstance();';
+        $this->text[] = '$xoops = \Xoops::getInstance();';
         $this->text[] = '$helper = ' . ucfirst($module_name) . '::getInstance();';
         $this->text[] = '$request = $xoops->request();';
         foreach (array_keys($tables_arr) as $i) {
             $table_name = $tables_arr[$i]->getVar('table_name');
             $this->text[] = '// Get handler ' . ucfirst($table_name);
-            $this->text[] = '$' . mb_strtolower($table_name) . '_Handler = $helper->getHandler' . ucfirst($table_name) . '();';
+            $this->text[] = '$' . mb_strtolower($table_name) . 'Handler = $helper->getHandler' . ucfirst($table_name) . '();';
         }
         $this->text[] = '// Get $_POST, $_GET, $_REQUEST';
         $this->text[] = '$op = $request->asStr(\'op\', \'list\');';
@@ -127,7 +127,7 @@ class Admin extends File
             $this->text[] = '$nb_pager = $helper->getConfig(\'adminpager\');';
         }
         $this->text[] = '// Get admin menu istance';
-        $this->text[] = '$admin_menu = new XoopsModuleAdmin();';
+        $this->text[] = '$admin_menu = new \XoopsModuleAdmin();';
 
         return $this->text;
     }
@@ -140,6 +140,7 @@ class Admin extends File
      */
     public function adminIndex($module = null, $module_name = null)
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
 
@@ -187,7 +188,7 @@ class Admin extends File
         $menu = 1;
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
-        $this->text[] = '$adminmenu = array();';
+        $this->text[] = '$adminmenu =[];';
         $this->text[] = '$i = 0;';
         $this->text[] = '$adminmenu[$i][\'title\'] = ' . $module_name . 'Locale::ADMIN_MENU' . $menu . ';';
         $this->text[] = '$adminmenu[$i][\'link\'] = \'admin/index.php\';';
@@ -219,7 +220,6 @@ class Admin extends File
 
     /**
      * @param string $module
-     * @param string $module_name
      * @param mixed  $paypal
      *
      * @return $this->text
@@ -228,7 +228,7 @@ class Admin extends File
     {
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
-        $this->text[] = 'include dirname(__FILE__) . \'/header.php\'';
+        $this->text[] = 'require __DIR__ . \'/header.php\'';
         $this->text[] = '// Header';
         $this->text[] = '$xoops->header();';
         $this->text[] = '// About';
@@ -255,6 +255,7 @@ class Admin extends File
 
     /**
      * @param null
+     * @return bool
      */
     private function getPermissions()
     {
@@ -263,6 +264,7 @@ class Admin extends File
 
     /**
      * @param null
+     * @return bool
      */
     private function getAdminPager()
     {

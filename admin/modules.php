@@ -21,10 +21,8 @@ use Xoops\Core\Request;
  * @since         2.6.0
  *
  * @author        XOOPS Development Team
- *
- * @version       $Id: modules.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include __DIR__ . '/header.php';
+require __DIR__ . '/header.php';
 // Get $_POST, $_GET, $_REQUEST
 $op = Request::getCmd('op', 'list');
 $start = Request::getInt('start', 0);
@@ -34,26 +32,26 @@ $limit = $helper->getConfig('adminpager');
 $modId = Request::getInt('mod_id');
 // Get handler
 $xoops->header('admin:tdmcreate/tdmcreate_modules.tpl');
-$adminMenu->renderNavigation('modules.php');
+$adminObject->renderNavigation('modules.php');
 switch ($op) {
     case 'list':
     default:
-        $adminMenu->addTips(Tdmcreate\Locale::MODULE_TIPS);
-        $adminMenu->addItemButton(Tdmcreate\Locale::A_ADD_MODULE, 'modules.php?op=new', 'add');
-        $adminMenu->renderTips();
-        $adminMenu->renderButton();
+        $adminObject->addTips(\TdmcreateLocale::MODULE_TIPS);
+        $adminObject->addItemButton(\TdmcreateLocale::A_ADD_MODULE, 'modules.php?op=new', 'add');
+        $adminObject->renderTips();
+        $adminObject->displayButton();
         $xoops->theme()->addStylesheet('modules/tdmcreate/assets/css/styles.css');
         $xoops->theme()->addScript('modules/tdmcreate/assets/js/functions.js');
         // Get modules list
         $numbRowsMods = $modulesHandler->getCountModules();
         $modulesArray = $modulesHandler->getAllModules($start, $limit);
         // Redirect if there aren't modules
-        if (0 == $numbRowsMods) {
-            $xoops->redirect('modules.php?op=new', 2, Tdmcreate\Locale::NOT_MODULES);
+        if (0 === $numbRowsMods) {
+            $xoops->redirect('modules.php?op=new', 2, \TdmcreateLocale::NOT_MODULES);
         }
         // Assign Template variables
         $xoops->tpl()->assign('modules_count', $numbRowsMods);
-        $xoops->tpl()->assign('modPathIcon16', TDMC_URL . '/assets/icons/16');
+        $xoops->tpl()->assign('pathIcon16', TDMC_URL . '/assets/images/icons/16');
         if ($numbRowsMods > 0) {
             foreach (array_keys($modulesArray) as $i) {
                 $module = $modulesArray[$i]->getValues();
@@ -62,19 +60,20 @@ switch ($op) {
             }
             // Display Page Navigation
             if ($numbRowsMods > $limit) {
-                $nav = new XoopsPageNav($numbRowsMods, $limit, $start, 'start');
+                $nav = new \XoopsPageNav($numbRowsMods, $limit, $start, 'start');
                 $xoops->tpl()->assign('pagenav', $nav->renderNav(4));
             }
         } else {
-            $xoops->tpl()->assign('error_message', Tdmcreate\Locale::E_NO_MODULES);
+            $xoops->tpl()->assign('error_message', \TdmcreateLocale::E_NO_MODULES);
         }
         break;
     case 'new':
-        $adminMenu->addItemButton(Tdmcreate\Locale::MODULES_LIST, 'modules.php', 'application-view-detail');
-        $adminMenu->renderButton();
+        $adminObject->addItemButton(\TdmcreateLocale::MODULES_LIST, 'modules.php', 'application-view-detail');
+        $adminObject->displayButton();
 
         $modulesObj = $modulesHandler->create();
-        $form = $xoops->getModuleForm($modulesObj, 'modules');
+//        $form = $xoops->getModuleForm($modulesObj, 'Modules');
+        $form = new \XoopsModules\Tdmcreate\Form\ModulesForm($modulesObj);
         $xoops->tpl()->assign('form', $form->render());
         break;
     case 'save':
@@ -114,7 +113,7 @@ switch ($op) {
                                  'mod_subversion' => Request::getString('mod_subversion', ''),
                              ]);
         //Form module_image
-        $uploader = new XoopsMediaUploader(TDMC_UPLOAD_IMAGES_MODULES_PATH, $helper->getConfig('mimetypes'), $helper->getConfig('maxuploadsize'), null, null);
+        $uploader = new \XoopsMediaUploader(TDMC_UPLOAD_IMAGES_MODULES_PATH, $helper->getConfig('mimetypes'), $helper->getConfig('maxuploadsize'), null, null);
         if ($uploader->fetchMedia('xoops_upload_file')) {
             $extension = preg_replace("/^.+\.([^.]+)$/sU", '\\1', $_FILES['modules_image']['name']);
             $imageName = 'logo.' . $extension;
@@ -126,7 +125,7 @@ switch ($op) {
                 $modulesObj->setVar('mod_image', $uploader->getSavedFileName());
             }
         } else {
-            if ('blank.gif' == $_POST['modules_image']) {
+            if ('blank.gif' === $_POST['modules_image']) {
                 $modulesObj->setVar('mod_image', $_POST['mod_image']);
             } else {
                 $modulesObj->setVar('mod_image', $_POST['modules_image']);
@@ -148,42 +147,43 @@ switch ($op) {
                              ]);
         // Insert Data
         if ($modulesHandler->insert($modulesObj)) {
-            $xoops->redirect('modules.php', 2, XoopsLocale::S_DATA_INSERTED);
+            $xoops->redirect('modules.php', 2, \XoopsLocale::S_DATA_INSERTED);
         }
         // Form Data
         $xoops->error($modulesObj->getHtmlErrors());
-        $form = $xoops->getModuleForm($modulesObj, 'modules');
+        //        $form = $xoops->getModuleForm($modulesObj, 'Modules');
+        $form = new \XoopsModules\Tdmcreate\Form\ModulesForm($modulesObj);
         $xoops->tpl()->assign('form', $form->render());
         break;
     case 'edit':
-        $adminMenu->addItemButton(Tdmcreate\Locale::A_ADD_MODULE, 'modules.php?op=new', 'add');
-        $adminMenu->addItemButton(Tdmcreate\Locale::A_LIST_MODULES, 'modules.php', 'application-view-detail');
-        $adminMenu->renderButton();
+        $adminObject->addItemButton(\TdmcreateLocale::A_ADD_MODULE, 'modules.php?op=new', 'add');
+        $adminObject->addItemButton(\TdmcreateLocale::A_LIST_MODULES, 'modules.php', 'application-view-detail');
+        $adminObject->displayButton();
         if ($modId > 0) {
             $modulesObj = $modulesHandler->get($modId);
             $form = $helper->getForm($modulesObj, 'modules');
             $xoops->tpl()->assign('form', $form->render());
         } else {
-            $xoops->redirect('modules.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
+            $xoops->redirect('modules.php', 1, \XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
         break;
     case 'delete':
         if ($modId > 0) {
             $modulesObj = $modulesHandler->get($modId);
-            if (isset($_POST['ok']) && 1 == $_POST['ok']) {
+            if (isset($_POST['ok']) && 1 === $_POST['ok']) {
                 if (!$xoops->security()->check()) {
                     $xoops->redirect('modules.php', 3, implode(',', $xoops->security()->getErrors()));
                 }
                 if ($modulesHandler->delete($modulesObj)) {
-                    $xoops->redirect('modules.php', 2, sprintf(Tdmcreate\Locale::S_DELETED, Tdmcreate\Locale::MODULE));
+                    $xoops->redirect('modules.php', 2, sprintf(\TdmcreateLocale::S_DELETED, \TdmcreateLocale::MODULE));
                 } else {
                     $xoops->error($modulesObj->getHtmlErrors());
                 }
             } else {
-                $xoops->confirm(['ok' => 1, 'mod_id' => $modId, 'op' => 'delete'], 'modules.php', sprintf(Tdmcreate\Locale::QF_ARE_YOU_SURE_TO_DELETE, $modulesObj->getVar('mod_name')) . '<br />');
+                $xoops->confirm(['ok' => 1, 'mod_id' => $modId, 'op' => 'delete'], 'modules.php', sprintf(\TdmcreateLocale::QF_ARE_YOU_SURE_TO_DELETE, $modulesObj->getVar('mod_name')) . '<br>');
             }
         } else {
-            $xoops->redirect('modules.php', 1, XoopsLocale::E_DATABASE_NOT_UPDATED);
+            $xoops->redirect('modules.php', 1, \XoopsLocale::E_DATABASE_NOT_UPDATED);
         }
         break;
 }

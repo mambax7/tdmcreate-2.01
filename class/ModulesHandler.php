@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,9 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: modules.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
-use XoopsModules\Tdmcreate;
 use Xoops\Core\Database\Connection;
+use XoopsModules\Tdmcreate;
 
 /**
  * Class ModulesHandler.
@@ -36,12 +35,12 @@ class ModulesHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_modules', 'tdmcreatemodules', 'mod_id', 'mod_name');
+        parent::__construct($db, 'tdmcreate_modules', Modules::class, 'mod_id', 'mod_name');
     }
 
     public function getAllModules($start = 0, $limit = 0, $sort = 'mod_id ASC, mod_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
@@ -52,7 +51,7 @@ class ModulesHandler extends \XoopsPersistableObjectHandler
 
     public function getCountModules($start = 0, $limit = 0, $sort = 'mod_id ASC, mod_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,10 +21,7 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: common.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -43,8 +42,9 @@ class Common /*extends File*/
 
     /**
      * @param string $module
+     * @return string
      */
-    public function getCommonHeader($module)
+    public static function getCommonHeader($module)
     {
         $name = $module->getVar('mod_name');
         $version = $module->getVar('mod_version');

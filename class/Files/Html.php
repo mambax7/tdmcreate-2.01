@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,10 +20,7 @@
  * @since           2.5.0
  *
  * @author          Txmod Xoops http://www.txmodxoops.org
- *
- * @version         $Id: html.php 14058 2016-04-25 00:53:24Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 /**
@@ -55,13 +54,12 @@ class Html
     /**
      * @public function getHtmlTag
      *
-     * @param       $tag
-     * @param       $attributes
-     * @param       $content
-     * @param       $closed
-     * @param mixed $noClosed
-     * @param mixed $noBreack
-     * @param mixed $t
+     * @param string $tag
+     * @param array  $attributes
+     * @param string $content
+     * @param mixed  $noClosed
+     * @param mixed  $noBreack
+     * @param mixed  $t
      *
      * @return string
      */
@@ -72,7 +70,7 @@ class Html
         }
         $attr = $this->getAttributes($attributes);
         if ($noClosed) {
-            $ret = "{$t}<{$tag}{$attr} />";
+            $ret = "{$t}<{$tag}{$attr}>";
         } elseif ($noBreack) {
             $ret = "{$t}<{$tag}{$attr}>{$content}</{$tag}>";
         } else {
@@ -95,7 +93,7 @@ class Html
     {
         $str = '';
         foreach ($attributes as $name => $value) {
-            if ('_' != $name) {
+            if ('_' !== $name) {
                 $str .= ' ' . $name . '="' . $value . '"';
             }
         }

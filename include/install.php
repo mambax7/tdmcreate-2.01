@@ -20,38 +20,45 @@
  *
  * @author          TDM Xoops (AKA Developers)
  *
- * @version         $Id: install.php 10665 2012-12-27 10:14:15Z timgno $
  * @param mixed $module
+ * @return bool
  */
 function xoops_module_install_tdmcreate($module)
 {
-    $xoops = Xoops::getInstance();
+    $xoops_upload_path = \XoopsBaseConfig::get('uploads-path');
+    $xoops = \Xoops::getInstance();
     $xoops->loadLanguage('modinfo');
     $xoops->registry()->set('tdmcreate_id', $module->getVar('mid'));
 
-    $indexFile = XOOPS_UPLOAD_PATH . '/index.html';
-    $blankFile = XOOPS_UPLOAD_PATH . '/blank.gif';
+    $indexFile = $xoops_upload_path . '/index.html';
+    $blankFile = $xoops_upload_path . '/blank.gif';
 
     //Creation of folder 'uploads/tdmcreate'
-    $tdmcreate = XOOPS_UPLOAD_PATH . '/tdmcreate';
-    if (!is_dir($tdmcreate)) {
-        mkdir($tdmcreate, 0777);
-        chmod($tdmcreate, 0777);
+    $tdmcreatePath = $xoops_upload_path . '/tdmcreate';
+    if (!is_dir($tdmcreatePath)) {
+        if (!mkdir($tdmcreatePath, 0777) && !is_dir($tdmcreatePath)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $tdmcreatePath));
+        }
+        chmod($tdmcreatePath, 0777);
     }
-    copy($indexFile, $tdmcreate . '/index.html');
+    copy($indexFile, $tdmcreatePath . '/index.html');
 
     //Creation of the 'files' folder in uploads
-    $files_uploads = $tdmcreate . '/files';
+    $files_uploads = $tdmcreatePath . '/files';
     if (!is_dir($files_uploads)) {
-        mkdir($files_uploads, 0777);
+        if (!mkdir($files_uploads, 0777) && !is_dir($files_uploads)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $files_uploads));
+        }
         chmod($files_uploads, 0777);
     }
     copy($indexFile, $files_uploads . '/index.html');
 
     //Creation of the 'repository' folder in uploads
-    $repository = $tdmcreate . '/repository';
+    $repository = $tdmcreatePath . '/repository';
     if (!is_dir($repository)) {
-        mkdir($repository, 0777);
+        if (!mkdir($repository, 0777) && !is_dir($repository)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $repository));
+        }
         chmod($repository, 0777);
     }
     copy($indexFile, $repository . '/index.html');
@@ -59,7 +66,9 @@ function xoops_module_install_tdmcreate($module)
     //Creation of the 'repository/extensions' folder in uploads
     $extensions = $repository . '/extensions';
     if (!is_dir($extensions)) {
-        mkdir($extensions, 0777);
+        if (!mkdir($extensions, 0777) && !is_dir($extensions)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $extensions));
+        }
         chmod($extensions, 0777);
     }
     copy($indexFile, $extensions . '/index.html');
@@ -67,15 +76,19 @@ function xoops_module_install_tdmcreate($module)
     //Creation of the 'repository/modules' folder in uploads
     $modules = $repository . '/modules';
     if (!is_dir($modules)) {
-        mkdir($modules, 0777);
+        if (!mkdir($modules, 0777) && !is_dir($modules)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $modules));
+        }
         chmod($modules, 0777);
     }
     copy($indexFile, $modules . '/index.html');
 
     //Creation of the 'images' folder in uploads
-    $images = $tdmcreate . '/images';
+    $images = $tdmcreatePath . '/images';
     if (!is_dir($images)) {
-        mkdir($images, 0777);
+        if (!mkdir($images, 0777) && !is_dir($images)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $images));
+        }
         chmod($images, 0777);
     }
     copy($indexFile, $images . '/index.html');
@@ -86,7 +99,9 @@ function xoops_module_install_tdmcreate($module)
     $default = TDMC_ROOT_PATH . '/assets/images/default.png';
     $naked = TDMC_ROOT_PATH . '/assets/images/naked.png';
     if (!is_dir($modules)) {
-        mkdir($modules, 0777);
+        if (!mkdir($modules, 0777) && !is_dir($modules)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $modules));
+        }
         chmod($modules, 0777);
     }
     copy($indexFile, $modules . '/index.html');
@@ -97,7 +112,9 @@ function xoops_module_install_tdmcreate($module)
     //Creation of the folder 'images/tables' in uploads
     $tables = $images . '/tables';
     if (!is_dir($tables)) {
-        mkdir($tables, 0777);
+        if (!mkdir($tables, 0777) && !is_dir($tables)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $tables));
+        }
         chmod($tables, 0777);
     }
     copy($indexFile, $tables . '/index.html');
@@ -106,7 +123,9 @@ function xoops_module_install_tdmcreate($module)
     //Creation of the folder 'images/extensions' in uploads
     $extensions = $images . '/extensions';
     if (!is_dir($extensions)) {
-        mkdir($extensions, 0777);
+        if (!mkdir($extensions, 0777) && !is_dir($extensions)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $extensions));
+        }
         chmod($extensions, 0777);
     }
     copy($indexFile, $extensions . '/index.html');

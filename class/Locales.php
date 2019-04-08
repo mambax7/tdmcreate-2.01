@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,8 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: locales.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 /**
  * Class Locale.

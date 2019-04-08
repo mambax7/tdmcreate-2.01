@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -10,7 +12,6 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-
 /**
  * tdmcreate module.
  *
@@ -20,12 +21,9 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: fieldnull.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
-use XoopsModules\Tdmcreate;
 use Xoops\Core\Database\Connection;
+use XoopsModules\Tdmcreate;
 
 /**
  * Class FieldnullHandler.
@@ -37,6 +35,6 @@ class FieldnullHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_fieldnull', 'tdmcreatefieldnull', 'fieldnull_id', 'fieldnull_name');
+        parent::__construct($db, 'tdmcreate_fieldnull', Fieldnull::class, 'fieldnull_id', 'fieldnull_name');
     }
 }

@@ -9,6 +9,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * tdmcreate module.
  *
@@ -18,47 +19,58 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: xoops_version.php 10665 2012-12-27 10:14:15Z timgno $
  */
 
 use XoopsModules\Tdmcreate;
-use XoopsModules\Tdmcreate\Helper;
 
-$xoops = Xoops::getInstance();
-$xoops->loadLocale();
+//use XoopsModules\Tdmcreate\Helper;
+
+//$xoops = \Xoops::getInstance();
+//$xoops->loadLocale();
+
+//$helper = \XoopsModules\Tdmcreate\Helper::getInstance();
+
+//$xoops = \Xoops::getInstance();
+//$helper = $xoops->getModuleHelper('tdmcreate');
+
+//$helper->loadLocale();
+
+$moduleDirName = basename(__DIR__);
 
 /*
  General settings
  */
-$modversion = [];
-$modversion['name'] = Locale::MODULE_NAME;
-$modversion['description'] = Locale::MODULE_DESC;
-$modversion['version'] = 2.01;
-$modversion['author'] = 'Xoops Team Developers Module, Timgno';
-$modversion['nickname'] = 'timgno';
-$modversion['credits'] = 'The XOOPS Project, Timgno';
-$modversion['license'] = 'GNU GPL 2.0';
+$modversion                = [];
+$modversion['name']        = \TdmcreateLocale::MODULE_NAME;
+$modversion['description'] = \TdmcreateLocale::MODULE_DESC;
+$modversion['version']     = 2.1;
+$modversion['author']      = 'Xoops Team Developers Module, Timgno';
+$modversion['nickname']    = 'timgno';
+$modversion['credits']     = 'The XOOPS Project, Timgno, Mamba';
+$modversion['license']     = 'GNU GPL 2.0';
 $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['official'] = 1;
-$modversion['help'] = 'page=help';
-$modversion['image'] = 'assets/images/logo.png';
-$modversion['dirname'] = 'tdmcreate';
+$modversion['official']    = 1;
+$modversion['help']        = 'page=help';
+$modversion['image']       = 'assets/images/logo.png';
+$modversion['modicons16']  = 'assets/images/icons/16';
+$modversion['modicons32']  = 'assets/images/icons/32';
+$modversion['dirname']     = 'tdmcreate';
+
 /*
  Settings for configs
 */
-$modversion['release_date'] = '2012/12/27';
-$modversion['module_website_url'] = 'http://www.xoops.org/';
+$modversion['release_date']        = '2012/12/27';
+$modversion['module_website_url']  = 'https://www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['module_status'] = 'Alpha';
-$modversion['min_php'] = '5.3';
-$modversion['min_xoops'] = '2.6.0';
-$modversion['min_db'] = ['mysql' => '5.1', 'mysqli' => '5.1'];
+$modversion['module_status']       = 'Alpha';
+$modversion['min_php']             = '5.3';
+$modversion['min_xoops']           = '2.6.0';
+$modversion['min_db']              = ['mysql' => '5.1', 'mysqli' => '5.1'];
 // paypal
-$modversion['paypal'] = [];
-$modversion['paypal']['business'] = 'xoopsfoundation@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . Tdmcreate\Locale::MODULE_DESC;
-$modversion['paypal']['amount'] = 0;
+$modversion['paypal']                  = [];
+$modversion['paypal']['business']      = 'xoopsfoundation@gmail.com';
+$modversion['paypal']['item_name']     = 'Donation : ' . \TdmcreateLocale::MODULE_DESC;
+$modversion['paypal']['amount']        = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 /*
  Admin menu
@@ -70,9 +82,9 @@ $modversion['extension'] = 0;
 /*
  Admin things
 */
-$modversion['hasAdmin'] = 1;
+$modversion['hasAdmin']   = 1;
 $modversion['adminindex'] = 'admin/index.php';
-$modversion['adminmenu'] = 'admin/menu.php';
+$modversion['adminmenu']  = 'admin/menu.php';
 
 // Scripts to run upon installation or update
 $modversion['onInstall'] = 'include/install.php';
@@ -83,345 +95,362 @@ $modversion['hasMain'] = 0;
 // Mysql file
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 // Tables created by sql file (without prefix!)
-$i = 1;
-$modversion['tables'][$i] = 'tdmcreate_modules';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_tables';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_fields';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_imports';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_locales';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_fieldtype';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_fieldattributes';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_fieldnull';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_fieldkey';
-++$i;
-$modversion['tables'][$i] = 'tdmcreate_fieldelements';
-unset($i);
+//$i                        = 1;
+//$modversion['tables'][$i] = 'tdmcreate_modules';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_tables';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_fields';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_imports';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_locales';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_fieldtype';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_fieldattributes';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_fieldnull';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_fieldkey';
+//++$i;
+//$modversion['tables'][$i] = 'tdmcreate_fieldelements';
+//unset($i);
+
+
+$modversion['tables'] = [
+    $moduleDirName . '_' . 'settings',
+    $moduleDirName . '_' . 'modules',
+    $moduleDirName . '_' . 'tables',
+    $moduleDirName . '_' . 'fields',
+//    $moduleDirName . '_' . 'languages',
+    $moduleDirName . '_' . 'locales',
+    $moduleDirName . '_' . 'fieldtype',
+    $moduleDirName . '_' . 'fieldattributes',
+    $moduleDirName . '_' . 'fieldnull',
+    $moduleDirName . '_' . 'fieldkey',
+    $moduleDirName . '_' . 'fieldelements',
+    $moduleDirName . '_' . 'morefiles',
+];
+
 /*
  Preferences
 */
-$i = 1;
-$modversion['config'][$i]['name'] = 'break' . $i;
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_BREAK_GENERAL;
+$i                                       = 1;
+$modversion['config'][$i]['name']        = 'break' . $i;
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_BREAK_GENERAL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'line_break';
-$modversion['config'][$i]['valuetype'] = 'textbox';
-$modversion['config'][$i]['default'] = 'head';
+$modversion['config'][$i]['formtype']    = 'line_break';
+$modversion['config'][$i]['valuetype']   = 'textbox';
+$modversion['config'][$i]['default']     = 'head';
 ++$i;
-$editors = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor');
-$modversion['config'][$i]['name'] = 'editor';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_EDITOR;
-$modversion['config'][$i]['description'] = Tdmcreate\Locale::CONF_EDITOR_DESC;
-$modversion['config'][$i]['formtype'] = 'select';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'dhtml';
-$modversion['config'][$i]['options'] = $editors;
+$editors                                 = \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor');
+$modversion['config'][$i]['name']        = 'editor';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_EDITOR;
+$modversion['config'][$i]['description'] = \TdmcreateLocale::CONF_EDITOR_DESC;
+$modversion['config'][$i]['formtype']    = 'select';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'dhtml';
+$modversion['config'][$i]['options']     = $editors;
 ++$i;
 //Uploads : maxsize img
-$modversion['config'][$i]['name'] = 'maxuploadsize';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MAX_UPLOAD_SIZE;
-$modversion['config'][$i]['description'] = Tdmcreate\Locale::CONF_MAX_UPLOAD_SIZE_DESC;
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = '500000';
+$modversion['config'][$i]['name']        = 'maxuploadsize';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MAX_UPLOAD_SIZE;
+$modversion['config'][$i]['description'] = \TdmcreateLocale::CONF_MAX_UPLOAD_SIZE_DESC;
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = '500000';
 ++$i;
 //Uploads : mimetypes img
-$modversion['config'][$i]['name'] = 'mimetypes';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MIMETYPES;
-$modversion['config'][$i]['description'] = Tdmcreate\Locale::CONF_MIMETYPES_DESC;
-$modversion['config'][$i]['formtype'] = 'select_multi';
-$modversion['config'][$i]['valuetype'] = 'array';
-$modversion['config'][$i]['default'] = ['image/gif', 'image/jpeg', 'image/png'];
-$modversion['config'][$i]['options'] = [
-    'bmp' => 'image/bmp',
-    'gif' => 'image/gif',
+$modversion['config'][$i]['name']        = 'mimetypes';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MIMETYPES;
+$modversion['config'][$i]['description'] = \TdmcreateLocale::CONF_MIMETYPES_DESC;
+$modversion['config'][$i]['formtype']    = 'select_multi';
+$modversion['config'][$i]['valuetype']   = 'array';
+$modversion['config'][$i]['default']     = ['image/gif', 'image/jpeg', 'image/png'];
+$modversion['config'][$i]['options']     = [
+    'bmp'  => 'image/bmp',
+    'gif'  => 'image/gif',
     'jpeg' => 'image/pjpeg',
     'jpeg' => 'image/jpeg',
-    'jpg' => 'image/jpeg',
-    'jpe' => 'image/jpeg',
-    'png' => 'image/png',
+    'jpg'  => 'image/jpeg',
+    'jpe'  => 'image/jpeg',
+    'png'  => 'image/png',
 ];
 ++$i;
-$modversion['config'][$i]['name'] = 'adminpager';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_ADMIN_PAGER;
+$modversion['config'][$i]['name']        = 'adminpager';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_ADMIN_PAGER;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 20;
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 20;
 ++$i;
-$modversion['config'][$i]['name'] = 'break' . $i;
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_BREAK_MODULE;
+$modversion['config'][$i]['name']        = 'break' . $i;
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_BREAK_MODULE;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'line_break';
-$modversion['config'][$i]['valuetype'] = 'textbox';
-$modversion['config'][$i]['default'] = 'head';
+$modversion['config'][$i]['formtype']    = 'line_break';
+$modversion['config'][$i]['valuetype']   = 'textbox';
+$modversion['config'][$i]['default']     = 'head';
 ++$i;
-$modversion['config'][$i]['name'] = 'name';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_NAME;
+$modversion['config'][$i]['name']        = 'name';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_NAME;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'My Module or Extension';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'My Module or Extension';
 ++$i;
-$modversion['config'][$i]['name'] = 'dirname';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DIRECTORY_NAME;
+$modversion['config'][$i]['name']        = 'dirname';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DIRECTORY_NAME;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'mymoduleextensiondirname';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'mymoduleextensiondirname';
 ++$i;
-$modversion['config'][$i]['name'] = 'isextension';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_IS_EXTENSION;
+$modversion['config'][$i]['name']        = 'isextension';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_IS_EXTENSION;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'version';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_VERSION;
+$modversion['config'][$i]['name']        = 'version';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_VERSION;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '1.0';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '1.0';
 ++$i;
-$modversion['config'][$i]['name'] = 'since';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_SINCE;
+$modversion['config'][$i]['name']        = 'since';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_SINCE;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '1.0';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '1.0';
 ++$i;
-$modversion['config'][$i]['name'] = 'min_php';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MIN_PHP;
+$modversion['config'][$i]['name']        = 'min_php';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MIN_PHP;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '5.3';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '5.3';
 ++$i;
-$modversion['config'][$i]['name'] = 'min_xoops';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MIN_XOOPS;
+$modversion['config'][$i]['name']        = 'min_xoops';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MIN_XOOPS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '2.6';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '2.6';
 ++$i;
-$modversion['config'][$i]['name'] = 'min_admin';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MIN_ADMIN;
+$modversion['config'][$i]['name']        = 'min_admin';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MIN_ADMIN;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '1.2';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '1.2';
 ++$i;
-$modversion['config'][$i]['name'] = 'min_mysql';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MIN_MYSQL;
+$modversion['config'][$i]['name']        = 'min_mysql';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MIN_MYSQL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '5.0.7';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '5.0.7';
 ++$i;
-$modversion['config'][$i]['name'] = 'author';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_AUTHOR;
+$modversion['config'][$i]['name']        = 'author';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_AUTHOR;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'XOOPS Development Team';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'XOOPS Development Team';
 ++$i;
-$modversion['config'][$i]['name'] = 'author_email';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_AUTHOR_EMAIL;
+$modversion['config'][$i]['name']        = 'author_email';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_AUTHOR_EMAIL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'name@site.com';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'name@site.com';
 ++$i;
-$modversion['config'][$i]['name'] = 'author_website_url';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_AUTHOR_WEBSITE_URL;
+$modversion['config'][$i]['name']        = 'author_website_url';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_AUTHOR_WEBSITE_URL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'https://xoops.org';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'https://xoops.org';
 ++$i;
-$modversion['config'][$i]['name'] = 'author_website_name';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_AUTHOR_WEBSITE_NAME;
+$modversion['config'][$i]['name']        = 'author_website_name';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_AUTHOR_WEBSITE_NAME;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'XOOPS Project';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'XOOPS Project';
 ++$i;
-$modversion['config'][$i]['name'] = 'credits';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_CREDITS;
+$modversion['config'][$i]['name']        = 'credits';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_CREDITS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'XOOPS Development Team';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'XOOPS Development Team';
 ++$i;
-$modversion['config'][$i]['name'] = 'license';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_LICENSE;
+$modversion['config'][$i]['name']        = 'license';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_LICENSE;
 $modversion['config'][$i]['description'] = ' ';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'GPL 2.0 or later';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'GPL 2.0 or later';
 ++$i;
-$modversion['config'][$i]['name'] = 'license_url';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_LICENSE_URL;
+$modversion['config'][$i]['name']        = 'license_url';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_LICENSE_URL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'http://www.fsf.org/copyleft/gpl.html';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'http://www.fsf.org/copyleft/gpl.html';
 ++$i;
-$modversion['config'][$i]['name'] = 'release_info';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_RELEASE_INFO;
+$modversion['config'][$i]['name']        = 'release_info';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_RELEASE_INFO;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'module_release_info';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'module_release_info';
 ++$i;
-$modversion['config'][$i]['name'] = 'release_file';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_RELEASE_FILE;
+$modversion['config'][$i]['name']        = 'release_file';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_RELEASE_FILE;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'module_release_info file';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'module_release_info file';
 ++$i;
-$modversion['config'][$i]['name'] = 'manual';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MANUAL;
+$modversion['config'][$i]['name']        = 'manual';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MANUAL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'Installation.txt';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'Installation.txt';
 ++$i;
-$modversion['config'][$i]['name'] = 'manual_file';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_MANUAL_FILE;
+$modversion['config'][$i]['name']        = 'manual_file';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_MANUAL_FILE;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'link to manual file';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'link to manual file';
 ++$i;
-$modversion['config'][$i]['name'] = 'demo_site_url';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DEMO_SITE_URL;
+$modversion['config'][$i]['name']        = 'demo_site_url';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DEMO_SITE_URL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'http://www.xoops.org';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'https://www.xoops.org';
 ++$i;
-$modversion['config'][$i]['name'] = 'demo_site_name';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DEMO_SITE_NAME;
+$modversion['config'][$i]['name']        = 'demo_site_name';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DEMO_SITE_NAME;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'XOOPS Demo Site';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'XOOPS Demo Site';
 ++$i;
-$modversion['config'][$i]['name'] = 'support_url';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_SUPPORT_URL;
+$modversion['config'][$i]['name']        = 'support_url';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_SUPPORT_URL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'https://xoops.org/forums/newbb';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'https://xoops.org/forums/newbb';
 ++$i;
-$modversion['config'][$i]['name'] = 'support_name';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_SUPPORT_NAME;
+$modversion['config'][$i]['name']        = 'support_name';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_SUPPORT_NAME;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'Support Forum';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'Support Forum';
 ++$i;
-$modversion['config'][$i]['name'] = 'website_url';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_WEBSITE_URL;
+$modversion['config'][$i]['name']        = 'website_url';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_WEBSITE_URL;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'www.xoops.org';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'www.xoops.org';
 ++$i;
-$modversion['config'][$i]['name'] = 'website_name';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_WEBSITE_NAME;
+$modversion['config'][$i]['name']        = 'website_name';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_WEBSITE_NAME;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'XOOPS Project';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'XOOPS Project';
 ++$i;
-$modversion['config'][$i]['name'] = 'status';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_STATUS;
+$modversion['config'][$i]['name']        = 'status';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_STATUS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'Beta 1';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'Beta 1';
 ++$i;
-$modversion['config'][$i]['name'] = 'display_admin';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DISPLAY_ADMIN_SIDE;
+$modversion['config'][$i]['name']        = 'display_admin';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DISPLAY_ADMIN_SIDE;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 1;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 1;
 ++$i;
-$modversion['config'][$i]['name'] = 'display_user';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DISPLAY_USER_SIDE;
+$modversion['config'][$i]['name']        = 'display_user';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DISPLAY_USER_SIDE;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 1;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 1;
 ++$i;
-$modversion['config'][$i]['name'] = 'display_submenu';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DISPLAY_SUBMENU;
+$modversion['config'][$i]['name']        = 'display_submenu';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DISPLAY_SUBMENU;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'active_blocks';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_ACTIVE_BLOCKS;
+$modversion['config'][$i]['name']        = 'active_blocks';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_ACTIVE_BLOCKS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'active_search';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_ACTIVE_SEARCH;
+$modversion['config'][$i]['name']        = 'active_search';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_ACTIVE_SEARCH;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'active_comments';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_ACTIVE_COMMENTS;
+$modversion['config'][$i]['name']        = 'active_comments';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_ACTIVE_COMMENTS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'active_notifications';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_ACTIVE_NOTIFICATIONS;
+$modversion['config'][$i]['name']        = 'active_notifications';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_ACTIVE_NOTIFICATIONS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'active_permissions';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_ACTIVE_PERMISSIONS;
+$modversion['config'][$i]['name']        = 'active_permissions';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_ACTIVE_PERMISSIONS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'inroot_copy';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_INROOT_COPY;
+$modversion['config'][$i]['name']        = 'inroot_copy';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_INROOT_COPY;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
+$modversion['config'][$i]['formtype']    = 'yesno';
+$modversion['config'][$i]['valuetype']   = 'int';
+$modversion['config'][$i]['default']     = 0;
 ++$i;
-$modversion['config'][$i]['name'] = 'release_date';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_RELEASE_DATE;
-$modversion['config'][$i]['description'] = Tdmcreate\Locale::CONF_RELEASE_DATE_DESC;
-$modversion['config'][$i]['formtype'] = 'select';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = date('m/d/Y');
-$modversion['config'][$i]['options'] = [
+$modversion['config'][$i]['name']        = 'release_date';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_RELEASE_DATE;
+$modversion['config'][$i]['description'] = \TdmcreateLocale::CONF_RELEASE_DATE_DESC;
+$modversion['config'][$i]['formtype']    = 'select';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = date('m/d/Y');
+$modversion['config'][$i]['options']     = [
     date('d/m/y') => date('d/m/y'),
     date('d-m-y') => date('d-m-y'),
     date('d.m.y') => date('d.m.y'),
@@ -436,24 +465,24 @@ $modversion['config'][$i]['options'] = [
     date('m.d.Y') => date('m.d.Y'),
 ];
 ++$i;
-$modversion['config'][$i]['name'] = 'description';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DESCRIPTION;
+$modversion['config'][$i]['name']        = 'description';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DESCRIPTION;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textarea';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'This module is for doing following...';
+$modversion['config'][$i]['formtype']    = 'textarea';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = 'This module is for doing following...';
 ++$i;
-$modversion['config'][$i]['name'] = 'donations';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_DONATIONS;
+$modversion['config'][$i]['name']        = 'donations';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_DONATIONS;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '6KJ7RW5DR3VTJ';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '6KJ7RW5DR3VTJ';
 ++$i;
-$modversion['config'][$i]['name'] = 'subversion';
-$modversion['config'][$i]['title'] = Tdmcreate\Locale::CONF_REVISION;
+$modversion['config'][$i]['name']        = 'subversion';
+$modversion['config'][$i]['title']       = \TdmcreateLocale::CONF_REVISION;
 $modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '13060';
+$modversion['config'][$i]['formtype']    = 'textbox';
+$modversion['config'][$i]['valuetype']   = 'text';
+$modversion['config'][$i]['default']     = '13060';
 unset($i);

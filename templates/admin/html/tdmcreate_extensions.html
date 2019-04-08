@@ -26,7 +26,7 @@
 					<td class='txtcenter'><{$ext.id}></td>
 					<td class='txtcenter'><{$ext.name}></td>
 					<td class='txtcenter'><{$ext.version}></td>
-					<td class='txtcenter'><img src='<{xoAppUrl uploads/tdmcreate/images/extensions}>/<{$ext.image}>' height='25px' title='<{$ext.name}>' alt='<{$ext.name}>' /></td>
+					<td class='txtcenter'><img src='<{xoAppUrl uploads/tdmcreate/images/extensions}>/<{$ext.image}>' height='25px' title='<{$ext.name}>' alt='<{$ext.name}>'></td>
 					<td class='txtcenter'><{$ext.release}></td>
 					<td class='txtcenter'><{$ext.status}></td>
 					<td class='txtcenter'><{$ext.admin}></td>
@@ -37,14 +37,14 @@
 					<td class='txtcenter'><{$ext.notifications}></td>
 					<td class='xo-actions txtcenter width6'>
 						<a href='extensions.php?op=edit&amp;id=<{$ext.id}>' title='<{translate key="A_EDIT"}>'>
-							<img src='<{xoAdminIcons edit.png}>' alt='<{translate key="A_EDIT"}>' /></a>
+							<img src='<{xoAdminIcons edit.png}>' alt='<{translate key="A_EDIT"}>'></a>
 						<a href='extensions.php?op=delete&amp;id=<{$ext.id}>' title='<{translate key="A_DELETE"}>'>
-							<img src='<{xoAdminIcons delete.png}>' alt='<{translate key="A_DELETE"}>' /></a>
+							<img src='<{xoAdminIcons delete.png}>' alt='<{translate key="A_DELETE"}>'></a>
 					</td>
 				</tr>
 			<{/foreach}>
 		</tbody>
-	</table><br />
+	</table><br>
     <{if $pagenav != ''}>
 		<{$pagenav}>	   
 	<{/if}>	

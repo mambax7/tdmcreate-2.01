@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,9 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: tables.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
-use XoopsModules\Tdmcreate;
 use Xoops\Core\Database\Connection;
+use XoopsModules\Tdmcreate;
 
 /**
  * Class TablesHandler.
@@ -36,7 +35,7 @@ class TablesHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_tables', 'tdmcreatetables', 'table_id', 'table_name');
+        parent::__construct($db, 'tdmcreate_tables', Tables::class, 'table_id', 'table_name');
     }
 
     /**
@@ -45,10 +44,11 @@ class TablesHandler extends \XoopsPersistableObjectHandler
      * @param mixed $limit
      * @param mixed $sort
      * @param mixed $order
+     * @return array
      */
     public function getAllTables($start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
@@ -64,11 +64,12 @@ class TablesHandler extends \XoopsPersistableObjectHandler
      * @param mixed $limit
      * @param mixed $sort
      * @param mixed $order
+     * @return array
      */
     public function getAllTablesByModuleId($mid, $start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('table_mid', $mid));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('table_mid', $mid));
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
@@ -83,10 +84,11 @@ class TablesHandler extends \XoopsPersistableObjectHandler
      * @param mixed $limit
      * @param mixed $sort
      * @param mixed $order
+     * @return int
      */
     public function getCountTables($start = 0, $limit = 0, $sort = 'table_id ASC, table_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);

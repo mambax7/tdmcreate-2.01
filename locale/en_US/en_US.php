@@ -18,11 +18,9 @@
  * @since           2.6.0
  *
  * @author          DuGris (aka Laurent JEN)
- *
- * @version         $Id: en_US.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
 
-use XoopsModules\Tdmcreate;
+//use XoopsModules\Tdmcreate;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
@@ -50,7 +48,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *      Config keys are stored in database, try to make them as short as possible!
  *   _DESC Description, append this for configs description.
  */
-class LocaleEn_US /*extends \XoopsLocaleEn_US*/
+class TdmcreateLocaleEn_US /*extends \XoopsLocaleEn_US*/
 {
     const A_ADD_EXTENSION = 'Add Extension';
     const A_ADD_LOCALE = 'Add Locale';
@@ -329,7 +327,7 @@ class LocaleEn_US /*extends \XoopsLocaleEn_US*/
     const TABLE_FIELDS_NUMBER = 'Fields Number';
     const TABLE_FIELDS_NUMBER_DESC = 'Number of fields for this table';
     const TABLE_FIELD_NAME = 'Field Name';
-    const TABLE_FIELD_NAME_DESC = "This is the prefix of field name (optional)<br />If you leave the field blank, doesn't appear anything in the fields of the next screen, otherwise you'll see all the fields with a prefix type (e.g: <span class='bold'>fieldname_</span>)";
+    const TABLE_FIELD_NAME_DESC = "This is the prefix of field name (optional)<br>If you leave the field blank, doesn't appear anything in the fields of the next screen, otherwise you'll see all the fields with a prefix type (e.g: <span class='bold'>fieldname_</span>)";
     const TABLE_ORDER = 'Table Order';
     const TABLE_ORDER_DESC = 'Create a Table Order for index and menu of the new modules';
 
@@ -414,7 +412,7 @@ class LocaleEn_US /*extends \XoopsLocaleEn_US*/
     const MODULEADMIN_MISSING = 'Module Admin Missing, Pleace! Install this Framework';
     const MODULE_DISPLAY_SUBMENU = 'Visible Submenu';
     const MODULE_ACTIVE_NOTIFY = 'Enable Notifications';
-    const NOT_INSERTED = "<span class='red bold'>The module is not saved,<br />it is likely that you have used a name that already exists,<br />please change name for a new module.</span>";
+    const NOT_INSERTED = "<span class='red bold'>The module is not saved,<br>it is likely that you have used a name that already exists,<br>please change name for a new module.</span>";
 
     const DELETE = 'Delete';
     const UPLOADS = 'Uploads';
@@ -425,7 +423,7 @@ class LocaleEn_US /*extends \XoopsLocaleEn_US*/
     const NOTIFIES = 'Notifies';
 
     const MISSING = 'Error: You don&#39;t use the Frameworks "admin module". Please install this Frameworks';
-    const F_MAINTAINEDBY = "<span class='bold green'>%s</span><span class='small italic'> is maintained by the </span><a href='%s' title='Visit %s' class='tooltip' rel='external'>%s</a><span class='small italic'> and by </span><a href='http://www.xoops.org/modules/newbb/' title='Visit Xoops Community' class='tooltip' rel='external'>Xoops Community</a>";
+    const F_MAINTAINEDBY = "<span class='bold green'>%s</span><span class='small italic'> is maintained by the </span><a href='%s' title='Visit %s' class='tooltip' rel='external'>%s</a><span class='small italic'> and by </span><a href='https://www.xoops.org/modules/newbb/' title='Visit Xoops Community' class='tooltip' rel='external'>Xoops Community</a>";
 
     const IMPORT = 'Import';
     const IMPORT_TIPS = '<ul><li>Import or delete tables of old modules</li></ul>';
@@ -461,4 +459,58 @@ class LocaleEn_US /*extends \XoopsLocaleEn_US*/
     const BUILDING_ERROR = 'Error';
     const BUILDING_FORM = 'Building Form';
     const BUILDING_DIRECTORY = "Files created in the directory <span class='bold'>uploads/tdmcreate/repository/%s</span> of the %s <span class='bold green'>%s</span>";
+
+    const BUILDING_SELECT_DEFAULT_MODULES = 'Building selected Default modules';
+    const S_DATABASE_SAVED = 'Database saved ';
+    const S_DATABASE_UPDATED = 'Database updated ';
+    const ADD_FIELDS = 'Add fieldes ';
+    const EDIT_FIELDS = 'Edit Fields ';
+    const L_NAME = 'Name ';
+    const L_TYPE = 'Type ';
+    const L_VALUE = 'Value ';
+    const L_ATTRIBUTES = 'Attributes ';
+    const L_NOTNULL = 'Not null ';
+    const L_DEFAULT = 'Default ';
+    const L_KEY = 'Key ';
+    const L_ARGUMENTS = 'Arguments ';
+    const IMPORT_ERROR_NOIMPORTS = 'Error: Could not import ';
+    const E_FILE_UPLOADING = 'File Uploading ';
+    const E_NO_LOCALE = 'No Locale ';
+
+    const ADD_MODULE = 'Add Module';
+    const ADD_MORE_FILE = 'Add more files';
+    const ADD_SETTING = 'Add setting';
+    const ERROR_TABLE_NAME_EXIST = 'Error: Table name already exists';
+    const EXTENSIONS = 'Extension';
+    const FILE_FORM_CREATED_OK = 'Form created OK';
+    const FILE_FORM_UPDATED_OK = 'Form updated OK';
+    const FORM_DELETED_OK = 'Form deleted OK';
+    const FORM_SURE_DELETE = 'Are you sure to delete this form?';
+    const FORMDELOK = 'Deleted successfully';
+    const FORMSUREDEL = 'Are you sure to delete it?';
+    const MODULE_FORM_UPDATED_OK = 'Form updated OK';
+    const MODULES = 'Modules';
+    const MORE_FILES_EDIT = 'Edit files';
+    const MORE_FILES_EXTENSION = 'File extension';
+    const MORE_FILES_EXTENSION_DESC = 'File extension details';
+    const MORE_FILES_INFOLDER = 'Files in folder';
+    const MORE_FILES_INFOLDER_DESC = 'List of files in the folder';
+    const MORE_FILES_LIST = 'File list';
+    const MORE_FILES_MODULE_SELECT = 'Select module files';
+    const MORE_FILES_MODULES = 'Module files';
+    const MORE_FILES_NAME = 'Name';
+    const MORE_FILES_NAME_DESC = 'Name description';
+    const MORE_FILES_NEW = 'New';
+    const NOTMODULES = 'Not a module';
+    const SELEXTDEF = 'Select extension';
+    const SELMODDEF = 'Select module';
+    const SETTINGS_LIST = 'Settings List';
+    const THEREARENT_MORE_FILES = 'There are no files';
+    const THEREARENT_SETTINGS = 'There are no settings';
+    const REQUIRED = 'Required';
+    const SUBMIT = 'Submit';
+
+//    const TDMC_CLASSES_PATH = '';
+//    const TDMC_UPLOAD_IMGMOD_URL = '';
+//    const TDMC_UPLOAD_PATH_FILES = '';
 }

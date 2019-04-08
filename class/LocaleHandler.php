@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,9 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: locale.php 13058 2015-05-06 14:56:29Z txmodxoops $
  */
-
-use XoopsModules\Tdmcreate;
 use Xoops\Core\Database\Connection;
+use XoopsModules\Tdmcreate;
 
 /**
  * Class LocaleHandler.
@@ -36,28 +35,28 @@ class LocaleHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_locale', 'tdmcreatelocale', 'loc_id', 'loc_mid');
+        parent::__construct($db, 'tdmcreate_locale', LocaleC::class, 'loc_id', 'loc_mid');
     }
 
     public function getAllLocale($start = 0, $limit = 0, $sort = 'loc_id ASC, loc_mid', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getAll($criteria);
+        return $this->getAll($criteria);
     }
 
     public function getCountLocale($start = 0, $limit = 0, $sort = 'loc_id ASC, loc_mid', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getCount($criteria);
+        return $this->getCount($criteria);
     }
 }

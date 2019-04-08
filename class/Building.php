@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,10 +20,7 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: building.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 /**
@@ -36,23 +35,24 @@ class Building extends \Xoops\Form\ThemeForm
 
     public function __construct()
     {
-        $helper = TDMCreate::getInstance();
-        $xoops = $helper->xoops();
+        $helper = Helper::getInstance();
+        $xoops = \Xoops::getInstance();
         $xoops->theme()->addStylesheet('modules/tdmcreate/assets/css/styles.css');
 
-        parent::__construct(Tdmcreate\Locale::BUILDING_TITLE, 'form', 'building.php', 'post', true, 'raw');
+        parent::__construct(\TdmcreateLocale::BUILDING_TITLE, 'form', 'building.php', 'post', true, 'raw');
 
-        $modulesHandler = &$helper->getModulesHandler()->getObjects(null);
-        $modulesSelect = new Xoops\Form\Select(Tdmcreate\Locale::BUILDING_MODULES, 'mod_id', 'mod_id');
-        $modulesSelect->addOption(0, Tdmcreate\Locale::BUILDING_SELECT_DEFAULT);
+//        $modulesHandler = $helper->getModulesHandler()->getObjects(null);
+        $modulesHandler = new \XoopsModules\Tdmcreate\ModulesHandler();
+        $modulesSelect = new \Xoops\Form\Select(\TdmcreateLocale::BUILDING_MODULES, 'mod_id', 'mod_id');
+        $modulesSelect->addOption(0, \TdmcreateLocale::BUILDING_SELECT_DEFAULT);
         //$modulesSelect->addOptionArray($modulesHandler->getList());
         foreach ($modulesHandler as $mod) {
             $modulesSelect->addOption($mod->getVar('mod_id'), $mod->getVar('mod_name'));
         }
         $this->addElement($modulesSelect, true);
 
-        $this->addElement(new Xoops\Form\Hidden('op', 'build'));
-        $this->addElement(new Xoops\Form\Button(XoopsLocale::REQUIRED . ' <sup class="red bold">*</sup>', 'submit', XoopsLocale::A_SUBMIT, 'submit'));
+        $this->addElement(new \Xoops\Form\Hidden('op', 'build'));
+        $this->addElement(new \Xoops\Form\Button(\XoopsLocale::REQUIRED . ' <sup class="red bold">*</sup>', 'submit', \XoopsLocale::A_SUBMIT, 'submit'));
     }
 
     /*

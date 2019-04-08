@@ -18,10 +18,8 @@
  * @since          2.6.0
  *
  * @author         XOOPS Development Team
- *
- * @version        $Id common.php 10900 2013-01-19 13:00:30Z timgno $
  **/
-$xoops = Xoops::getInstance();
+$xoops = \Xoops::getInstance();
 $helper = Banners::getInstance();
 
 $xoops_root_path = \XoopsBaseConfig::get('root-path');

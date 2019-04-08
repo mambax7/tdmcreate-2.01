@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,40 +21,36 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: structure.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 class Structure extends File
 {
     /**
      * folder object of the File.
      *
-     * @var XoopsFolderHandler
+     * @var \XoopsFolderHandler
      */
     public $mod_name = null;
 
     /**
      * folder object of the File.
      *
-     * @var XoopsFolderHandler
+     * @var \XoopsFolderHandler
      */
     public $file_name = null;
 
     /**
      * folder object of the File.
      *
-     * @var XoopsFolderHandler
+     * @var \XoopsFolderHandler
      */
     public $path = null;
 
     /**
      * folder object of the File.
      *
-     * @var XoopsFolderHandler
+     * @var \XoopsFolderHandler
      */
     public $copyFile = null;
 
@@ -73,7 +71,9 @@ class Structure extends File
     {
         $this->path = $path;
         if (!is_dir($this->path)) {
-            mkdir($this->path, 0777);
+            if (!mkdir($concurrentDirectory = $this->path, 0777) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
             chmod($this->path, 0777);
         }
     }
@@ -86,7 +86,9 @@ class Structure extends File
         $this->folder = $folder_name;
         $fname = $this->path . '/' . $this->mod_name . '/' . $this->folder;
         if (!is_dir($fname)) {
-            mkdir($fname, 0777);
+            if (!mkdir($fname, 0777) && !is_dir($fname)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $fname));
+            }
             chmod($fname, 0777);
         }
     }
@@ -103,7 +105,9 @@ class Structure extends File
         $this->copyFile = $copyFile;
         $fname = $this->path . '/' . $this->mod_name . '/' . $this->folder;
         if (!is_dir($fname)) {
-            mkdir($fname, 0777);
+            if (!mkdir($fname, 0777) && !is_dir($fname)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $fname));
+            }
             chmod($fname, 0777);
             $this->copyFile($this->folder, $this->copyFile, $this->file_name);
         } else {
@@ -122,7 +126,7 @@ class Structure extends File
         $this->folder = $folder_name;
         $this->copyFile = $copyFile;
         $fname = $this->path . '/' . $this->mod_name . '/' . $this->folder . '/' . $this->file_name;
-        if (is_dir($this->folder) && XoopsLoad::fileExists($fname)) {
+        if (is_dir($this->folder) && \XoopsLoad::fileExists($fname)) {
             chmod($fname, 0777);
             copy($this->copieFile, $fname);
         } else {

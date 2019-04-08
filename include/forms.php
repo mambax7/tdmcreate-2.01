@@ -19,8 +19,6 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: forms.php 10665 2012-12-27 10:14:15Z timgno $
  */
 defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
@@ -29,32 +27,33 @@ defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
  *
  * @param bool $action
  *
- * @return XoopsThemeForm
+ * @return \XoopsSimpleForm
  */
 function tdmcreate_getBuildingForm($action = false)
 {
-    $xoops = Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
 
     if (false === $action) {
         $action = $_SERVER['REQUEST_URI'];
     }
 
-    $modules_Handler = $xoops->getModuleHandler('modules');
-    $extensions_Handler = $xoops->getModuleHandler('extensions');
-    $form = new XoopsSimpleForm(_AM_TDMCREATE_BUILDING_TITLE, 'building', $action, 'post', true);
+    //        $modulesHandler = $xoops->getModuleHandler('modules');
+    $modulesHandler = new \XoopsModules\Tdmcreate\ModulesHandler();
+    $extensionsHandler = $xoops->getModuleHandler('extensions');
+    $form = new \XoopsSimpleForm(\TdmcreateLocale::BUILDING_TITLE, 'building', $action, 'post', true);
 
-    $mods_select = new XoopsFormSelect(_AM_TDMCREATE_MODULES, 'mod_name', 'mod_name');
-    $mods_select->addOption(0, _AM_TDMCREATE_SELMODDEF);
-    $mods_select->addOptionArray($modules_Handler->getList());
+    $mods_select = new \XoopsFormSelect(\TdmcreateLocale::MODULES, 'mod_name', 'mod_name');
+    $mods_select->addOption(0, \TdmcreateLocale::SELMODDEF);
+    $mods_select->addOptionArray($modulesHandler->getList());
     $form->addElement($mods_select, false);
 
-    $exts_select = new XoopsFormSelect(_AM_TDMCREATE_EXTENSIONS, 'ext_name', 'ext_name');
-    $exts_select->addOption(0, _AM_TDMCREATE_SELEXTDEF);
-    $exts_select->addOptionArray($extensions_Handler->getList());
+    $exts_select = new \XoopsFormSelect(\TdmcreateLocale::EXTENSIONS, 'ext_name', 'ext_name');
+    $exts_select->addOption(0, \TdmcreateLocale::SELEXTDEF);
+    $exts_select->addOptionArray($extensionsHandler->getList());
     $form->addElement($exts_select, false);
 
-    $form->addElement(new XoopsFormHidden('op', 'build'));
-    $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+    $form->addElement(new \XoopsFormHidden('op', 'build'));
+    $form->addElement(new \XoopsFormButton('', 'submit', \TdmcreateLocale::SUBMIT, 'submit'));
 
     return $form;
 }

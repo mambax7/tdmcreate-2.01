@@ -18,10 +18,7 @@
  * @since           2.6.0
  *
  * @author          TXMod Xoops (AKA Timgno)
- *
- * @version         $Id: header.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
@@ -32,21 +29,29 @@ require dirname(__DIR__) . '/preloads/autoloader.php';
 XoopsLoad::load('system', 'system');
 $system = \System::getInstance();
 
-$helper = XoopsModules\Tdmcreate\Helper::getInstance();
+/** @var \XoopsModules\Tdmcreate\Helper $helper */
+$helper = \XoopsModules\Tdmcreate\Helper::getInstance();
+//$helper->loadLocale();
+//$xoops = \Xoops::getInstance();
+//$xoops->loadLocale();
 
-$xoops = Xoops::getInstance();
-$xoops->loadLocale();
-
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
+//$sysPathIcon32
+//pathIcon16
 
 // Load local libraries
 XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/common.php'));
 XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/functions.php'));
 // Get handler
 $modulesHandler = new  \XoopsModules\Tdmcreate\ModulesHandler(); //$helper->getModulesHandler();
-$tablesHandler =  new  \XoopsModules\Tdmcreate\TablesHandler(); //$helper->getTablesHandler();
-$fieldsHandler =  new  \XoopsModules\Tdmcreate\FieldsHandler(); //$helper->getFieldsHandler();
-$localesHandler =  new  \XoopsModules\Tdmcreate\LocalesHandler(); //$helper->getLocalesHandler();
-$importsHandler =  new  \XoopsModules\Tdmcreate\ImportsHandler(); //$helper->getImportsHandler();
+$tablesHandler = new  \XoopsModules\Tdmcreate\TablesHandler(); //$helper->getTablesHandler();
+$fieldsHandler = new  \XoopsModules\Tdmcreate\FieldsHandler(); //$helper->getFieldsHandler();
+$localesHandler = new  \XoopsModules\Tdmcreate\LocalesHandler(); //$helper->getLocalesHandler();
+$importsHandler = new  \XoopsModules\Tdmcreate\ImportsHandler(); //$helper->getImportsHandler();
 // Add Script
 $xoops->theme()->addScript('media/xoops/xoops.js');
 $xoops->theme()->addScript('modules/system/js/admin.js');
@@ -55,4 +60,4 @@ $xoops->theme()->addScript('modules/tdmcreate/assets/js/functions.js');
 $xoops->theme()->addStylesheet('modules/system/css/admin.css');
 $xoops->theme()->addStylesheet('modules/tdmcreate/assets/css/admin.css');
 // Get admin menu istance
-$adminMenu = new \Xoops\Module\Admin();
+$adminObject = new \Xoops\Module\Admin();

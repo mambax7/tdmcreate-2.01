@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,10 +21,7 @@
  * @since           2.6.0
  *
  * @author          TXMod Xoops (aka Timgno)
- *
- * @version         $Id: helper.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 use Xoops\Core\Database\Connection;
 
@@ -39,7 +38,7 @@ class Helper extends \Xoops\Module\Helper\HelperAbstract
     }
 
     /**
-     * @return TDMCreate
+     * @return \Xoops\Module\Helper\HelperAbstract
      */
     public static function getInstance()
     {
@@ -47,82 +46,114 @@ class Helper extends \Xoops\Module\Helper\HelperAbstract
     }
 
     /**
-     * @return TDMCreateTDMCreate_modulesHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getModulesHandler()
     {
-        return $this->getHandler('modules');
+        return $this->getHandler('Modules');
     }
 
     /**
-     * @return TDMCreateTDMCreate_tablesHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getTablesHandler()
     {
-        return $this->getHandler('tables');
+        return $this->getHandler('Tables');
     }
 
     /**
-     * @return TDMCreateTDMCreate_fieldsHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getFieldsHandler()
     {
-        return $this->getHandler('fields');
+        return $this->getHandler('Fields');
     }
 
     /**
-     * @return TDMCreateTDMCreate_localesHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getLocalesHandler()
     {
-        return $this->getHandler('locales');
+        return $this->getHandler('Locales');
     }
 
     /**
-     * @return TDMCreateTDMCreate_importsHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getImportsHandler()
     {
-        return $this->getHandler('imports');
+        return $this->getHandler('Imports');
     }
 
     /**
-     * @return TDMCreateTDMCreate_fieldtypeHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getFieldTypeHandler()
     {
-        return $this->getHandler('fieldtype');
+        return $this->getHandler('Fieldtype');
     }
 
     /**
-     * @return TDMCreateTDMCreate_fieldattributesHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getFieldAttributesHandler()
     {
-        return $this->getHandler('fieldattributes');
+        return $this->getHandler('Fieldattributes');
     }
 
     /**
-     * @return TDMCreateTDMCreate_fieldnullHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getFieldNullHandler()
     {
-        return $this->getHandler('fieldnull');
+        return $this->getHandler('Fieldnull');
     }
 
     /**
-     * @return TDMCreateTDMCreate_fieldkeyHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getFieldKeyHandler()
     {
-        return $this->getHandler('fieldkey');
+        return $this->getHandler('Fieldkey');
     }
 
     /**
-     * @return TDMCreateTDMCreate_fieldelementsHandler
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
+     */
+    public function getSettingsHandler()
+    {
+        return $this->getHandler('Settings');
+    }
+
+    /**
+     * @return \Xoops\Core\Kernel\XoopsObjectHandler
      */
     public function getFieldElementsHandler()
     {
-        return $this->getHandler('fieldelements');
+        return $this->getHandler('Fieldelements');
+    }
+
+    /**
+     * Get an Object Handler
+     *
+     * @param string $name name of handler to load
+     *
+     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
+     */
+    public function getHandler($name)
+    {
+        $ret   = false;
+
+        $class = '\\XoopsModules\\' . ucfirst(mb_strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
+        if (!class_exists($class)) {
+            throw new \RuntimeException("Class '$class' not found");
+        }
+        /** @var \Xoops\Core\Database\Connection $db */
+//        $db     = \XoopsDatabaseFactory::getDatabaseConnection();
+        $db = \Xoops::getInstance()->db();
+        $helper = self::getInstance();
+        $ret    = new $class($db, $helper);
+        $this->addLog("Getting handler '{$name}'");
+        return $ret;
     }
 }

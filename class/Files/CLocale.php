@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,9 +20,7 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Timgno <txmodxoops@gmail.com>
- * @version         $Id: locales.php 13061 2015-05-15 12:00:25Z txmodxoops $
  */
-
 use XoopsModules\Tdmcreate;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -30,11 +30,11 @@ class CLocale extends File
     /**
      * Constructor
      *
-     * @param TDMCreateFile|null $file
+     * @param TDMCreate\File|null $file
      * @param string             $module
      * @param mixed              $text
      */
-    public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
+    public function __construct(TDMCreate\File $file = null, $module = '', $text = '')
     {
         if (isset($file)) {
             $this->create($file, $module);

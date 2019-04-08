@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,15 +20,11 @@
  *
  * @since           2.5.7
  *
- * @author          Txmod Xoops <webmaster@txmodxoops.org> - <http://www.txmodxoops.org/>
- *
- * @version         $Id: morefiles.php 13080 2015-06-12 10:12:32Z timgno $
+ * @author          Txmod Xoops <webmaster@txmodxoops.org> - <http://www.txmodxoops.org>
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
-//include __DIR__ . '/autoload.php';
+//require __DIR__ . '/autoload.php';
 /*
 *  @Class MoreFiles
 *  @extends \XoopsObject
@@ -42,7 +40,7 @@ class MoreFiles extends \XoopsObject
      *
      * @var mixed
      */
-    private $tdmcreate;
+    private $helper;
 
     /**
      * Settings.
@@ -58,7 +56,7 @@ class MoreFiles extends \XoopsObject
 
     public function __construct()
     {
-        $this->tdmcreate = Tdmcreate\Helper::getInstance();
+        $this->helper = Tdmcreate\Helper::getInstance();
 
         $this->initVar('file_id', XOBJ_DTYPE_INT);
         $this->initVar('file_mid', XOBJ_DTYPE_INT);
@@ -106,7 +104,7 @@ class MoreFiles extends \XoopsObject
     /**
      * @param bool $action
      *
-     * @return XoopsThemeForm
+     * @return \XoopsThemeForm
      */
     public function getFormMoreFiles($action = false)
     {
@@ -115,36 +113,36 @@ class MoreFiles extends \XoopsObject
         }
 
         $isNew = $this->isNew();
-        $title = $isNew ? sprintf(_AM_TDMCREATE_MORE_FILES_NEW) : sprintf(_AM_TDMCREATE_MORE_FILES_EDIT);
+        $title = $isNew ? sprintf(\TdmcreateLocale::MORE_FILES_NEW) : sprintf(\TdmcreateLocale::MORE_FILES_EDIT);
 
-        xoops_load('XoopsFormLoader');
+        \XoopsLoad::load('XoopsFormLoader');
 
-        $form = new XoopsThemeForm($title, 'morefilesform', $action, 'post', true);
+        $form = new \XoopsThemeForm($title, 'morefilesform', $action, 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
 
-        $modules = $this->tdmcreate->getHandler('modules')->getObjects(null);
-        $modulesSelect = new XoopsFormSelect(_AM_TDMCREATE_MORE_FILES_MODULES, 'file_mid', $this->getVar('file_mid'));
-        $modulesSelect->addOption('', _AM_TDMCREATE_MORE_FILES_MODULE_SELECT);
+        $modules = $this->helper->getHandler('modules')->getObjects(null);
+        $modulesSelect = new \XoopsFormSelect(\TdmcreateLocale::MORE_FILES_MODULES, 'file_mid', $this->getVar('file_mid'));
+        $modulesSelect->addOption('', \TdmcreateLocale::MORE_FILES_MODULE_SELECT);
         foreach ($modules as $mod) {
             //$modulesSelect->addOptionArray();
             $modulesSelect->addOption($mod->getVar('mod_id'), $mod->getVar('mod_name'));
         }
         $form->addElement($modulesSelect, true);
 
-        $modName = new XoopsFormText(_AM_TDMCREATE_MORE_FILES_NAME, 'file_name', 50, 255, $this->getVar('file_name'));
-        $modName->setDescription(_AM_TDMCREATE_MORE_FILES_NAME_DESC);
+        $modName = new \XoopsFormText(\TdmcreateLocale::MORE_FILES_NAME, 'file_name', 50, 255, $this->getVar('file_name'));
+        $modName->setDescription(\TdmcreateLocale::MORE_FILES_NAME_DESC);
         $form->addElement($modName, true);
 
-        $fileEstension = new XoopsFormText(_AM_TDMCREATE_MORE_FILES_EXTENSION, 'file_extension', 50, 255, $this->getVar('file_extension'));
-        $fileEstension->setDescription(_AM_TDMCREATE_MORE_FILES_EXTENSION_DESC);
+        $fileEstension = new \XoopsFormText(\TdmcreateLocale::MORE_FILES_EXTENSION, 'file_extension', 50, 255, $this->getVar('file_extension'));
+        $fileEstension->setDescription(\TdmcreateLocale::MORE_FILES_EXTENSION_DESC);
         $form->addElement($fileEstension, true);
 
-        $fileInfolder = new XoopsFormText(_AM_TDMCREATE_MORE_FILES_INFOLDER, 'file_infolder', 50, 255, $this->getVar('file_infolder'));
-        $fileInfolder->setDescription(_AM_TDMCREATE_MORE_FILES_INFOLDER_DESC);
+        $fileInfolder = new \XoopsFormText(\TdmcreateLocale::MORE_FILES_INFOLDER, 'file_infolder', 50, 255, $this->getVar('file_infolder'));
+        $fileInfolder->setDescription(\TdmcreateLocale::MORE_FILES_INFOLDER_DESC);
         $form->addElement($fileInfolder, true);
 
-        $form->addElement(new XoopsFormHidden('op', 'save'));
-        $form->addElement(new XoopsFormButton(_REQUIRED . ' <sup class="red bold">*</sup>', 'submit', _SUBMIT, 'submit'));
+        $form->addElement(new \XoopsFormHidden('op', 'save'));
+        $form->addElement(new \XoopsFormButton(\TdmcreateLocale::REQUIRED . ' <sup class="red bold">*</sup>', 'submit', \TdmcreateLocale::SUBMIT, 'submit'));
 
         return $form;
     }
@@ -158,10 +156,10 @@ class MoreFiles extends \XoopsObject
      */
     public function getValuesMoreFiles($keys = null, $format = null, $maxDepth = null)
     {
-        $ret = parent::getValues($keys, $format, $maxDepth);
+        $ret = $this->getValues($keys, $format, $maxDepth);
         // Values
         $ret['id'] = $this->getVar('file_id');
-        $ret['mid'] = $this->tdmcreate->getHandler('modules')->get($this->getVar('file_mid'))->getVar('mod_name');
+        $ret['mid'] = $this->helper->getHandler('modules')->get($this->getVar('file_mid'))->getVar('mod_name');
         $ret['name'] = $this->getVar('file_name');
         $ret['extension'] = $this->getVar('file_extension');
         $ret['infolder'] = $this->getVar('file_infolder');

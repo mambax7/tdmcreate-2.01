@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,10 +21,7 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: classes.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -32,11 +31,11 @@ class Classes extends File
     /**
      * Constructor.
      *
-     * @param TDMCreateFile|null $file
+     * @param TDMCreate\File|null $file
      * @param string             $module
      * @param mixed              $text
      */
-    public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
+    public function __construct(TDMCreate\File $file = null, $module = '', $text = '')
     {
         if (isset($file)) {
             $this->create($file, $module);
@@ -52,6 +51,7 @@ class Classes extends File
      */
     public function classFile($module = null, $module_name = null)
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
 
@@ -59,18 +59,19 @@ class Classes extends File
     }
 
     /**
-     * @param string $var
-     * @param object $data_type
+     * @param mixed  $key
+     * @param string $data_type
      * @param bool   $required
      * @param int    $maxlength
      * @param string $options
-     * @param mixed  $key
+     * @return string
+     * @return string
      */
     public function classInitVar($key, $data_type = 'INT', $required = false, $maxlength = null, $options = '')
     {
-        $r = true == $required ? ', ' . $required : '';
-        $m = (null != $maxlength) ? ', ' . $maxlength : $maxlength;
-        $o = ('' != $options) ? ', ' . $options : $options;
+        $r = true === $required ? ', ' . $required : '';
+        $m = (null !== $maxlength) ? ', ' . $maxlength : $maxlength;
+        $o = ('' !== $options) ? ', ' . $options : $options;
 
         return '$this->initVar(\'' . $key . '\', XOBJ_DTYPE_' . $data_type . ', null' . $r . $m . $o . ');';
     }
@@ -86,9 +87,10 @@ class Classes extends File
      */
     public function classXoopsFormText($caption, $name, $width = 50, $byte = 255, $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$this->addElement(new XoopsFormText(' . $caption . ', "' . $name . '", ' . $width . ', ' . $byte . ', $obj->getVar(\'' . $name . '\'))' . $req . ');' . PHP_EOL;
+			$this->addElement(new \XoopsFormText(' . $caption . ', "' . $name . '", ' . $width . ', ' . $byte . ', $obj->getVar(\'' . $name . '\'))' . $req . ');' . PHP_EOL;
 
         return $this->text;
     }
@@ -105,9 +107,10 @@ class Classes extends File
      */
     public function classXoopsFormTextArea($caption, $name, $value = '', $rows = 5, $cols = 50, $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$this->addElement(new XoopsFormTextArea(' . $caption . ', "' . $name . '", $obj->getVar(\'' . $value . '\'), ' . $rows . ', ' . $cols . ')' . $req . ');' . PHP_EOL;
+			$this->addElement(new \XoopsFormTextArea(' . $caption . ', "' . $name . '", $obj->getVar(\'' . $value . '\'), ' . $rows . ', ' . $cols . ')' . $req . ');' . PHP_EOL;
 
         return $this->text;
     }
@@ -124,9 +127,10 @@ class Classes extends File
      */
     public function classXoopsFormDhtmlTextArea($caption, $name, $value = '', $rows = 10, $cols = 80, $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$editor_configs = array();
+			$editor_configs = [];
 			$editor_configs["name"] = \'' . $name . '\';
 			$editor_configs["value"] = $obj->getVar(\'' . $value . '\', \'e\');
 			$editor_configs["rows"] = ' . $rows . ';
@@ -134,7 +138,7 @@ class Classes extends File
 			$editor_configs["width"] = "100%";
 			$editor_configs["height"] = "400px";
 			$editor_configs["editor"] = $xoops->getModuleConfig(\'editor\');
-			$form->addElement( new XoopsFormEditor(' . $caption . ', \'' . $name . '\', $editor_configs)' . $req . ' );' . PHP_EOL;
+			$form->addElement( new \XoopsFormEditor(' . $caption . ', \'' . $name . '\', $editor_configs)' . $req . ' );' . PHP_EOL;
 
         return $this->text;
     }
@@ -149,10 +153,11 @@ class Classes extends File
      */
     public function classXoopsFormCheckBox($caption, $name, $value = '', $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
 			$' . $name . ' = $obj->isNew() ? 0 : $obj->getVar(\'' . $value . '\');
-			$check_' . $name . ' = new XoopsFormCheckBox(' . $caption . ', \'' . $name . '\', $' . $name . ');
+			$check_' . $name . ' = new \XoopsFormCheckBox(' . $caption . ', \'' . $name . '\', $' . $name . ');
 			$check_' . $name . '->addOption(1, \' \');
 			$this->addElement($check_' . $name . $req . ');' . PHP_EOL;
 
@@ -169,10 +174,11 @@ class Classes extends File
      */
     public function classXoopsFormRadioYN($caption, $name, $value = '', $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
 			$' . $name . ' = $obj->isNew() ? 0 : $obj->getVar(\'' . $value . '\');
-			$form->addElement(new XoopsFormRadioYN(' . $caption . ', \'' . $name . '\', $' . $name . ')' . $req . ');' . PHP_EOL;
+			$form->addElement(new \XoopsFormRadioYN(' . $caption . ', \'' . $name . '\', $' . $name . ')' . $req . ');' . PHP_EOL;
 
         return $this->text;
     }
@@ -185,8 +191,9 @@ class Classes extends File
      */
     public function classXoopsFormHidden($name, $value = '')
     {
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$this->addElement(new XoopsFormHidden(\'' . $name . '\', $obj->getVar(\'' . $value . '\')));' . PHP_EOL;
+			$this->addElement(new \XoopsFormHidden(\'' . $name . '\', $obj->getVar(\'' . $value . '\')));' . PHP_EOL;
 
         return $this->text;
     }
@@ -203,23 +210,24 @@ class Classes extends File
      */
     public function classXoopsFormUploadImage($caption, $module, $table, $name, $value = '', $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
 			$' . $name . ' = $obj->getVar(\'' . $value . '\') ? $obj->getVar(\'' . $value . '\') : \'blank.gif\';
 			$uploadir = \'/uploads/' . $module . '/' . $table . '/' . $name . '\';
-			$imgtray = new XoopsFormElementTray(XoopsLocale::A_, \'<br />\');
+			$imgtray = new \XoopsFormElementTray(\XoopsLocale::A_, \'<br>\');
 			$imgpath = sprintf(' . $caption . 'FORMIMAGE_PATH, $uploadir);
-			$imageselect = new XoopsFormSelect($imgpath, \'' . $name . '\', $' . $name . ');
-			$image_array = XoopsLists :: getImgListAsArray( XOOPS_ROOT_PATH.$uploadir );
+			$imageselect = new \XoopsFormSelect($imgpath, \'' . $name . '\', $' . $name . ');
+			$image_array = \XoopsLists :: getImgListAsArray( XOOPS_ROOT_PATH.$uploadir );
 			foreach( $image_array as $image ) {
 				$imageselect->addOption("{$image}", $image);
 			}
 			$imageselect->setExtra( "onchange=\'showImgSelected(\"image_' . $name . '\", \"' . $name . '\", \"".$uploadir."\", \"\", \"".XOOPS_URL."\")\'" );
 			$imgtray->addElement($imageselect);
-			$imgtray->addElement( new XoopsFormLabel( \'\', "<br /><img src=\'".XOOPS_URL."/".$uploadir."/".$' . $name . '."\' name=\'image_' . $name . '\' id=\'image_' . $name . '\' alt=\'\' />" ) );
-			$fileseltray = new XoopsFormElementTray(\'\',\'<br />\');
-			$fileseltray->addElement(new XoopsFormFile(' . $caption . 'FORMUPLOAD , "' . $name . '", $xoops->getModuleConfig(\'maxsize\')));
-			$fileseltray->addElement(new XoopsFormLabel(\'\'));
+			$imgtray->addElement( new \XoopsFormLabel( \'\', "<br><img src=\'".XOOPS_URL."/".$uploadir."/".$' . $name . '."\' name=\'image_' . $name . '\' id=\'image_' . $name . '\' alt=\'\'>" ) );
+			$fileseltray = new \XoopsFormElementTray(\'\',\'<br>\');
+			$fileseltray->addElement(new \XoopsFormFile(' . $caption . 'FORMUPLOAD , "' . $name . '", $xoops->getModuleConfig(\'maxsize\')));
+			$fileseltray->addElement(new \XoopsFormLabel(\'\'));
 			$imgtray->addElement($fileseltray);
 			$this->addElement($imgtray);' . PHP_EOL;
 
@@ -235,9 +243,10 @@ class Classes extends File
      */
     public function classXoopsFormUploadFile($caption, $name, $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$this->addElement(new XoopsFormFile(' . $caption . ', \'' . $name . '\', $xoops->getModuleConfig(\'maxsize\'))' . $req . ');' . PHP_EOL;
+			$this->addElement(new \XoopsFormFile(' . $caption . ', \'' . $name . '\', $xoops->getModuleConfig(\'maxsize\'))' . $req . ');' . PHP_EOL;
 
         return $this->text;
     }
@@ -252,9 +261,10 @@ class Classes extends File
      */
     public function classXoopsFormColorPicker($caption, $name, $value = '', $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$this->addElement(new XoopsFormColorPicker(' . $caption . ', \'' . $name . '\', $obj->getVar(\'' . $value . '\'))' . $req . ');' . PHP_EOL;
+			$this->addElement(new \XoopsFormColorPicker(' . $caption . ', \'' . $name . '\', $obj->getVar(\'' . $value . '\'))' . $req . ');' . PHP_EOL;
 
         return $this->text;
     }
@@ -269,9 +279,10 @@ class Classes extends File
      */
     public function classXoopsFormSelectUser($caption, $name, $value = '', $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$this->addElement(new XoopsFormSelectUser(' . $caption . ', \'' . $name . '\', false, $obj->getVar(\'' . $value . '\'), 1, false)' . $req . ');' . PHP_EOL;
+			$this->addElement(new \XoopsFormSelectUser(' . $caption . ', \'' . $name . '\', false, $obj->getVar(\'' . $value . '\'), 1, false)' . $req . ');' . PHP_EOL;
 
         return $this->text;
     }
@@ -286,9 +297,10 @@ class Classes extends File
      */
     public function classXoopsFormTextDateSelect($caption, $name, $value = '', $required = false)
     {
-        $req = true == $required ? ', true' : '';
+        $req = true === $required ? ', true' : '';
+        $this->text = [];
         $this->text[] = '// ' . ucfirst($name) . '
-			$this->addElement(new XoopsFormTextDateSelect(' . $caption . ', \'' . $name . '\', $obj->getVar(\'' . $value . '\'))' . $req . ');' . PHP_EOL;
+			$this->addElement(new \XoopsFormTextDateSelect(' . $caption . ', \'' . $name . '\', $obj->getVar(\'' . $value . '\'))' . $req . ');' . PHP_EOL;
 
         return $this->text;
     }

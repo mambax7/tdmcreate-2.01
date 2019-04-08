@@ -1,6 +1,6 @@
-<{include file="admin:system|admin_navigation.html"}>
-<{include file="admin:system|admin_tips.html"}>
-<{include file="admin:system|admin_buttons.html"}>
+<{include file="admin:system|admin_navigation.tpl"}>
+<{include file="admin:system|admin_tips.tpl"}>
+<{include file="admin:system|admin_buttons.tpl"}>
 <{if $imports_count}>
 	<table width='100%' cellspacing='1' class='outer'>
 		<thead>
@@ -23,14 +23,14 @@
 					<td class='txtcenter'><{$import.nbfields}></td>
 					<td class='xo-actions txtcenter width6'>
 						<a href='import.php?op=edit&amp;id=<{$import.id}>' title='<{translate key="A_EDIT"}>'>
-							<img src='<{xoAdminIcons edit.png}>' alt='<{translate key="A_EDIT"}>' /></a>
+							<img src='<{xoAdminIcons edit.png}>' alt='<{translate key="A_EDIT"}>'></a>
 						<a href='import.php?op=delete&amp;id=<{$import.id}>' title='<{translate key="A_DELETE"}>'>
-							<img src='<{xoAdminIcons delete.png}>' alt='<{translate key="A_DELETE"}>' /></a>
+							<img src='<{xoAdminIcons delete.png}>' alt='<{translate key="A_DELETE"}>'></a>
 					</td>
 				</tr>
 			<{/foreach}>
 		</tbody>
-	</table><br />
+	</table><br>
 	<{if $pagenav != ''}>
 		<{$pagenav}>	   
 	<{/if}>	

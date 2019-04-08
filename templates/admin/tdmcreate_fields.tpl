@@ -21,26 +21,26 @@
 				<{if $table.id > 0}>
                 <tr id="table_<{$table.id}>" order="<{$table.order}>" class="tdmc-fields toggleMain">
                     <td class='center bold width5'>&#40;<{$table.lid}>&#41;
-                        <a href="#" title="Toggle"><img class="imageToggle" src="<{$modPathIcon16}>/toggle.png" alt="Toggle" /></a>
+                        <a href="#" title="Toggle"><img class="imageToggle" src="<{$pathIcon16}>/toggle.png" alt="Toggle"></a>
                     </td>
                     <td class='center' style="text-decoration: underline;"><class='bold'><{$table.name}></td>
-                    <td class='center'><img src="<{xoModuleIcons32}><{$table.image}>" title="<{$table.name}>" alt="<{$table.name}>" /></td>
+                    <td class='center'><img src="<{xoModuleIcons32}><{$table.image}>" title="<{$table.name}>" alt="<{$table.name}>"></td>
                     <td class='center bold'><{$table.nbfields}></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
-                    <td class='center'><img src="<{$modPathIcon16}>/fields.png" /></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
+                    <td class='center'><img src="<{$pathIcon16}>/fields.png"></td>
 					<td class='xo-actions txtcenter width6'>
 						<a href='tables.php?op=edit&amp;id=<{$table.id}>' title='<{translate key="A_EDIT"}>'>
-							<img src="<{xoAdminIcons 'edit.png'}>" alt='<{translate key="A_EDIT"}>' /></a>
-						<a href='fields.php?op=edit&amp;field_mid=<{$table.mid}>&amp;field_tid=<{$table.id}>' title='<{translate key="A_EDIT_FIELDS"}>'><img src="<{xoAdminIcons 'inserttable.png'}>" alt='<{translate key="A_EDIT_FIELDS"}>' /></a>
+							<img src="<{xoAdminIcons 'edit.png'}>" alt='<{translate key="A_EDIT"}>'></a>
+						<a href='fields.php?op=edit&amp;field_mid=<{$table.mid}>&amp;field_tid=<{$table.id}>' title='<{translate key="A_EDIT_FIELDS"}>'><img src="<{xoAdminIcons 'inserttable.png'}>" alt='<{translate key="A_EDIT_FIELDS"}>'></a>
 						<a href='tables.php?op=delete&amp;id=<{$table.id}>' title='<{translate key="A_DELETE"}>'>
-							<img src="<{xoAdminIcons 'delete.png'}>" alt='<{translate key="A_DELETE"}>' /></a>
+							<img src="<{xoAdminIcons 'delete.png'}>" alt='<{translate key="A_DELETE"}>'></a>
 					</td>
 				</tr>
 				<tr class="toggleChild">
@@ -49,7 +49,7 @@
 				<{/if}>
 			<{/foreach}>
 		</tbody>
-	</table><br />
+	</table><br>
 	<{if $pagenav|default:false}>
 		<{$pagenav}>	   
 	<{/if}>	

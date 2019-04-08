@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,8 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: modules.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 /**
  * Class Modules.
@@ -97,13 +95,13 @@ class Modules extends \XoopsObject
 
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
-        $tdmcreate = TDMCreate::getInstance();
+        $helper = Helper::getInstance();
         $ret = $this->getValues($keys, $format, $maxDepth);
         $ret['id'] = $this->getVar('mod_id');
         $ret['name'] = $this->getVar('mod_name');
         $ret['version'] = number_format($this->getVar('mod_version'), 2);
         $ret['image'] = TDMC_UPLOAD_IMAGES_MODULES_URL . '/' . $this->getVar('mod_image');
-        $ret['release'] = XoopsLocale::formatTimestamp($this->getVar('mod_release'), $tdmcreate->getConfig('release_date'));
+        $ret['release'] = \XoopsLocale::formatTimestamp($this->getVar('mod_release'), $helper->getConfig('release_date'));
         $ret['status'] = $this->getVar('mod_status');
         $ret['admin'] = $this->getVar('mod_admin');
         $ret['user'] = $this->getVar('mod_user');
@@ -130,8 +128,8 @@ class Modules extends \XoopsObject
     {
         $retModules = [];
         foreach ($this->optionsModules as $optionModule) {
-            if (1 == $this->getVar('mod_' . $optionModule)) {
-                array_push($retModules, $optionModule);
+            if (1 === $this->getVar('mod_' . $optionModule)) {
+                $retModules[] = $optionModule;
             }
         }
 

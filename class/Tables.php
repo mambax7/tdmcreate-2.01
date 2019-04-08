@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,8 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: tables.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 /**
  * Class Tables.
@@ -93,6 +91,7 @@ class Tables extends \XoopsObject
      * @param null|mixed $keys
      * @param null|mixed $format
      * @param null|mixed $maxDepth
+     * @return array|mixed
      */
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
@@ -100,7 +99,7 @@ class Tables extends \XoopsObject
         $ret['id'] = $this->getVar('table_id');
         $ret['mid'] = $this->getVar('table_mid');
         $ret['name'] = $this->getVar('table_name');
-        if (XoopsLoad::fileExists(XOOPS_ICONS32_PATH . '/' . $this->getVar('table_image'))) {
+        if (\XoopsLoad::fileExists(XOOPS_ICONS32_PATH . '/' . $this->getVar('table_image'))) {
             $ret['image'] = XOOPS_ICONS32_URL . '/' . $this->getVar('table_image');
         } else {
             $ret['image'] = TDMC_UPLOAD_IMAGES_TABLES_URL . '/' . $this->getVar('table_image');
@@ -134,7 +133,7 @@ class Tables extends \XoopsObject
      */
     public function getNewId()
     {
-        return Xoops::getInstance()->db()->getInsertId();
+        return \Xoops::getInstance()->db()->getInsertId();
     }
 
     /**
@@ -144,8 +143,8 @@ class Tables extends \XoopsObject
     {
         $retTable = [];
         foreach ($this->optionsTables as $optionTable) {
-            if (1 == $this->getVar('table_' . $optionTable)) {
-                array_push($retTable, $optionTable);
+            if (1 === $this->getVar('table_' . $optionTable)) {
+                $retTable[] = $optionTable;
             }
         }
 

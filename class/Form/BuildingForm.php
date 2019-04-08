@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Form;
+<?php
+
+namespace XoopsModules\Tdmcreate\Form;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,27 +21,24 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: building.php 10607 2012-12-30 00:36:57Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 class BuildingForm extends \Xoops\Form\ThemeForm
 {
     /**
-     * @param Tdmcreate\Building|XoopsObject $obj
+     * @param Tdmcreate\Building|\XoopsObject $obj
      */
-    public function __construct(Tdmcreate\Building &$obj)
+    public function __construct(Tdmcreate\Building $obj)
     {
-        parent::__construct(Tdmcreate\Locale::BUILDING_TITLE, 'form', 'building.php', 'post', true, 'raw');
+        parent::__construct(\TdmcreateLocale::BUILDING_TITLE, 'form', 'building.php', 'post', true, 'raw');
 
-        $moduleSelect = new Xoops\Form\Select(Tdmcreate\Locale::BUILDING_MODULES, 'mod_name', 'mod_name');
-        $moduleSelect->addOption(0, Tdmcreate\Locale::BUILDING_SELECT_DEFAULT_MODULES);
+        $moduleSelect = new \Xoops\Form\Select(\TdmcreateLocale::BUILDING_MODULES, 'mod_name', 'mod_name');
+        $moduleSelect->addOption(0, \TdmcreateLocale::BUILDING_SELECT_DEFAULT_MODULES);
         $moduleSelect->addOptionArray($modulesHandler->getList());
         $form->addElement($moduleSelect);
 
-        $this->addElement(new XoopsFormHidden('op', 'build'));
-        $this->addElement(new XoopsFormButton('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));
+        $this->addElement(new \XoopsFormHidden('op', 'build'));
+        $this->addElement(new \XoopsFormButton('', 'submit', \XoopsLocale::A_SUBMIT, 'submit'));
     }
 }

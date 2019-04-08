@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,10 +21,7 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: user.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -32,7 +31,7 @@ class User extends File
     /**
      * File.
      *
-     * @var array of {@link TDMCreateFile} objects
+     * @var array of {@link TDMCreate\File} objects
      */
     protected $userFile = [];
 
@@ -67,11 +66,11 @@ class User extends File
     /**
      * Constructor.
      *
-     * @param TDMCreateFile|null $file
+     * @param TDMCreate\File|null $file
      * @param string             $module
      * @param mixed              $text
      */
-    public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
+    public function __construct(TDMCreate\File $file = null, $module = '', $text = '')
     {
         if (isset($file)) {
             $this->create($file, $module);
@@ -80,12 +79,12 @@ class User extends File
     }
 
     /**
-     * @param TDMCreateFile $adminFile
-     * @param string        $module
+     * @param \XoopsModules\Tdmcreate\File $userFile
+     * @param string                       $module
      *
-     * @return TDMCreateFile
+     * @return \XoopsModules\Tdmcreate\Files\User
      */
-    public function create(TDMCreateFile $userFile, $module = '')
+    public function create(TDMCreate\File $userFile, $module = '')
     {
         $this->userFile[] = $userFile;
         $this->module[] = $module;
@@ -102,22 +101,23 @@ class User extends File
      */
     public function userHeader($module = null, $module_name = null, $tables_arr = [])
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
-        $this->text[] = 'require_once dirname(dirname(dirname(__FILE__))) . \'/mainfile.php\';';
-        $this->text[] = 'include_once dirname(dirname(__FILE__)) . \'/include/common.php\';';
-        $this->text[] = 'include_once dirname(dirname(__FILE__)) . \'/include/functions.php\';';
+        $this->text[] = 'require_once dirname(dirname(__DIR__)) . \'/mainfile.php\';';
+        $this->text[] = 'require_once dirname(__DIR__) . \'/include/common.php\';';
+        $this->text[] = 'require_once dirname(__DIR__) . \'/include/functions.php\';';
         $this->text[] = '// Get main instance';
         $this->text[] = 'XoopsLoad::load(\'system\', \'system\');';
         $this->text[] = '$system = \System::getInstance();';
         $this->text[] = '// Get main locale instance';
-        $this->text[] = '$xoops = Xoops::getInstance();';
+        $this->text[] = '$xoops = \Xoops::getInstance();';
         $this->text[] = '$helper = ' . ucfirst($module_name) . '::getInstance();';
         $this->text[] = '$request = $xoops->request();';
         foreach (array_keys($tables_arr) as $i) {
             $table_name = $tables_arr[$i]->getVar('table_name');
             $this->text[] = '// Get handler ' . ucfirst($table_name);
-            $this->text[] = '$' . mb_strtolower($table_name) . '_Handler = $helper->getHandler' . ucfirst($table_name) . '();';
+            $this->text[] = '$' . mb_strtolower($table_name) . 'Handler = $helper->getHandler' . ucfirst($table_name) . '();';
         }
         $this->text[] = '// Get $_POST, $_GET, $_REQUEST';
         $this->text[] = '$start = $request->asInt(\'start\', 0);';
@@ -137,6 +137,7 @@ class User extends File
      */
     public function userIndex($module = null, $module_name = null)
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
 
@@ -151,6 +152,7 @@ class User extends File
      */
     public function userFooter($module = null, $module_name = null)
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
         $this->text[] = '$xoops->footer();';
@@ -166,6 +168,7 @@ class User extends File
      */
     public function userPages($module = null, $module_name = null)
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
 
@@ -182,9 +185,10 @@ class User extends File
     public function userXoopsVersion($module = null, $module_name = null, $tables_arr = [])
     {
         $menu = 1;
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
-        $this->text[] = '$modversion = array();';
+        $this->text[] = '$modversion = [];';
         $this->text[] = '$modversion[\'name\'] = ' . ucfirst($module_name) . 'Locale::MODULE_NAME;';
         $this->text[] = '$modversion[\'description\'] = ' . ucfirst($module_name) . 'Locale::MODULE_DESC;';
         $this->text[] = '$modversion[\'version\'] = 1;';
@@ -200,7 +204,7 @@ class User extends File
 
         $this->text[] = '//about';
         $this->text[] = '$modversion[\'release_date\'] = \'2013/01/01\';';
-        $this->text[] = '$modversion[\'module_website_url\'] = \'http://www.xoops.org/\';';
+        $this->text[] = '$modversion[\'module_website_url\'] = \'https://www.xoops.org/\';';
         $this->text[] = '$modversion[\'module_website_name\'] = \'XOOPS\';';
         $this->text[] = '$modversion[\'module_status\'] = \'Alpha\';';
         $this->text[] = '$modversion[\'min_php\'] = \'5.3\';';
@@ -208,7 +212,7 @@ class User extends File
         $this->text[] = '$modversion[\'min_db\'] = array(\'mysql\'=>\'5.0.7\', \'mysqli\'=>\'5.0.7\');';
 
         $this->text[] = '// paypal';
-        $this->text[] = '$modversion[\'paypal\'] = array();';
+        $this->text[] = '$modversion[\'paypal\'] = [];';
         $this->text[] = '$modversion[\'paypal\'][\'business\'] = \'xoopsfoundation@gmail.com\';';
         $this->text[] = '$modversion[\'paypal\'][\'item_name\'] = \'Donation : \' . ' . ucfirst($module_name) . 'Locale::MODULE_DESC;';
         $this->text[] = '$modversion[\'paypal\'][\'amount\'] = 0;';
@@ -243,12 +247,12 @@ class User extends File
         $this->text[] = '$modversion[\'blocks\'][$i][\'show_func\']   = \'' . mb_strtolower($module_name) . '_blocks_show\';';
         $this->text[] = '$modversion[\'blocks\'][$i][\'edit_func\']   = \'' . mb_strtolower($module_name) . '_blocks_edit\';';
         $this->text[] = '$modversion[\'blocks\'][$i][\'options\']     = \'1|2|3|4|5\';';
-        $this->text[] = '$modversion[\'blocks\'][$i][\'template\']    = \'' . mb_strtolower($module_name) . '_blocks.html\';';
+        $this->text[] = '$modversion[\'blocks\'][$i][\'template\']    = \'' . mb_strtolower($module_name) . '_blocks.tpl\';';
         $this->text[] = '$i++;';
 
         $this->text[] = '// Preferences';
         $this->text[] = '$i = 0;';
-        $this->text[] = '$editors = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . \'/class/xoopseditor\');';
+        $this->text[] = '$editors = \XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . \'/class/xoopseditor\');';
         $this->text[] = '$modversion[\'config\'][$i][\'name\']        = \'editor\';';
         $this->text[] = '$modversion[\'config\'][$i][\'title\']       = ' . ucfirst($module_name) . 'Locale::CONF_EDITOR;';
         $this->text[] = '$modversion[\'config\'][$i][\'description\'] = \'\';';
@@ -281,6 +285,7 @@ class User extends File
 
     /**
      * @param null
+     * @return bool
      */
     private function getUserPager()
     {
@@ -289,6 +294,7 @@ class User extends File
 
     /**
      * @param null
+     * @return bool
      */
     private function getAdminPager()
     {

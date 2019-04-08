@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,9 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: fieldelements.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
-use XoopsModules\Tdmcreate;
 use Xoops\Core\Database\Connection;
+use XoopsModules\Tdmcreate;
 
 class FieldelementsHandler extends \XoopsPersistableObjectHandler
 {
@@ -33,6 +32,6 @@ class FieldelementsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_fieldelements', 'tdmcreatefieldelements', 'fieldelements_id', 'fieldelements_name');
+        parent::__construct($db, 'tdmcreate_fieldelements', Fieldelements::class, 'fieldelements_id', 'fieldelements_name');
     }
 }

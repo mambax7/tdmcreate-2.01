@@ -18,14 +18,12 @@
  * @since        2.6.0
  *
  * @author       trabis <lusopoemas@gmail.com>
- *
- * @version      $Id: locale.php 10956 2013-01-31 18:09:50Z timgno $
  */
 
-use XoopsModules\Tdmcreate;
+//use XoopsModules\Tdmcreate;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-class Locale extends \LocaleEn_US
+class TdmcreateLocale extends TdmcreateLocaleEn_US
 {
 }

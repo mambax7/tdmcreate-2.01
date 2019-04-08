@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,9 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: fields.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
-use XoopsModules\Tdmcreate;
 use Xoops\Core\Database\Connection;
+use XoopsModules\Tdmcreate;
 
 /**
  * Class FieldsHandler.
@@ -36,7 +35,7 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_fields', 'tdmcreatefields', 'field_id', 'field_name');
+        parent::__construct($db, 'tdmcreate_fields', Fields::class, 'field_id', 'field_name');
     }
 
     /**
@@ -45,16 +44,17 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      * @param mixed $limit
      * @param mixed $sort
      * @param mixed $order
+     * @return array
      */
     public function getAllFields($start = 0, $limit = 0, $sort = 'field_id ASC, field_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getAll($criteria);
+        return $this->getAll($criteria);
     }
 
     /**
@@ -65,18 +65,19 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      * @param mixed $limit
      * @param mixed $sort
      * @param mixed $order
+     * @return array
      */
     public function getAllFieldsByTableId($mid, $tid, $start = 0, $limit = 0, $sort = 'field_id ASC, field_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('field_mid', $mid));
-        $criteria->add(new Criteria('field_tid', $tid));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('field_mid', $mid));
+        $criteria->add(new \Criteria('field_tid', $tid));
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getAll($criteria);
+        return $this->getAll($criteria);
     }
 
     /**
@@ -87,17 +88,18 @@ class FieldsHandler extends \XoopsPersistableObjectHandler
      * @param mixed $limit
      * @param mixed $sort
      * @param mixed $order
+     * @return int
      */
     public function getCountFields($mid, $tid, $start = 0, $limit = 0, $sort = 'field_id ASC, field_name', $order = 'ASC')
     {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('field_mid', $mid));
-        $criteria->add(new Criteria('field_tid', $tid));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('field_mid', $mid));
+        $criteria->add(new \Criteria('field_tid', $tid));
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setStart($start);
         $criteria->setLimit($limit);
 
-        return parent::getCount($criteria);
+        return $this->getCount($criteria);
     }
 }

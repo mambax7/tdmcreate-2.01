@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,8 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: fields.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 /**
  * Class Fields.
@@ -64,6 +62,7 @@ class Fields extends \XoopsObject
      * @param null|mixed $keys
      * @param null|mixed $format
      * @param null|mixed $maxDepth
+     * @return array|mixed
      */
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {

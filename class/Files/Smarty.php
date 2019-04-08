@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,10 +20,7 @@
  * @since           2.5.0
  *
  * @author          Txmod Xoops http://www.txmodxoops.org
- *
- * @version         $Id: smarty.php 14058 2016-04-25 01:02:20Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 /**
@@ -87,7 +86,7 @@ class Smarty
     {
         $str = '';
         foreach ($attributes as $name => $value) {
-            if ('_' != $name) {
+            if ('_' !== $name) {
                 $str .= ' ' . $name . '="' . $value . '"';
             }
         }

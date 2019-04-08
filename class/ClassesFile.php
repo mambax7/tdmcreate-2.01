@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,10 +21,7 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: structure.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
 class ClassesFile
@@ -40,7 +39,7 @@ class ClassesFile
     /**
      * Constructor.
      *
-     * @param obj $class
+     * @param string $class
      */
     public function __construct($class)
     {
@@ -48,18 +47,19 @@ class ClassesFile
     }
 
     /**
-     * @param string $var
-     * @param object $data_type
+     * @param mixed  $key
+     * @param string $data_type
      * @param bool   $required
      * @param int    $maxlength
      * @param string $options
-     * @param mixed  $key
+     * @return string
+     * @return string
      */
     public function tdmc_initVar($key, $data_type = 'INT', $required = false, $maxlength = null, $options = '')
     {
-        $r = true == $required ? ', ' . $required : '';
-        $m = (null != $maxlength) ? ', ' . $maxlength : $maxlength;
-        $o = ('' != $options) ? ', ' . $options : $options;
+        $r = true === $required ? ', ' . $required : '';
+        $m = (null !== $maxlength) ? ', ' . $maxlength : $maxlength;
+        $o = ('' !== $options) ? ', ' . $options : $options;
 
         return '$this->initVar(\'' . $key . '\', XOBJ_DTYPE_' . $data_type . ', null' . $r . $m . $o . ');';
     }
@@ -68,6 +68,7 @@ class ClassesFile
      * @param string $key
      * @param mixed  $value
      * @param bool   $not_gpc
+     * @return string
      */
     public function tdmc_setVar($key, $value, $not_gpc = false)
     {
@@ -84,6 +85,7 @@ class ClassesFile
     /**
      * @param array $var_arr
      * @param bool  $not_gpc
+     * @return string
      */
     public function tdmc_setVars($var_arr, $not_gpc = false)
     {
@@ -94,11 +96,11 @@ class ClassesFile
             ++$c;
         }
         $res = '';
-        for ($i = 0; $i < $c; ++$i) {
+        foreach ($_array as $i => $iValue) {
             if ($i != $c - 1) {
-                $res .= $_array[$i] . $comma;
+                $res .= $iValue . $comma;
             } else {
-                $res .= $_array[$i];
+                $res .= $iValue;
             }
         }
         if ($not_gpc) {
@@ -128,21 +130,22 @@ class ClassesFile
      * @param string $value
      * @param string $sort
      * @param string $order
-     * @param int    $tree
      * @param int    $id
+     * @return string
+     * @return string
      */
     public function tdmc_Criteria($key, $value, $sort = '', $order = '', $id = null)
     {
-        $criteria = '$criteria = new CriteriaCompo();';
+        $criteria = '$criteria = new \CriteriaCompo();';
         if ($id) {
-            $criteria = '$criteria->add(new Criteria(\'' . $key . '\', ' . $value . ')));';
+            $criteria = '$criteria->add(new \Criteria(\'' . $key . '\', ' . $value . ')));';
         } else {
-            $criteria = '$criteria->add(new Criteria(\'' . $key . '\', ' . $id . ', ' . $value . ')));';
+            $criteria = '$criteria->add(new \Criteria(\'' . $key . '\', ' . $id . ', ' . $value . ')));';
         }
-        if ('' != $sort) {
+        if ('' !== $sort) {
             $criteria = '$criteria->setSort(\'' . $sort . '\');';
         }
-        if ('' != $order) {
+        if ('' !== $order) {
             $criteria = '$criteria->setOrder(\'' . $order . '\');';
         }
 

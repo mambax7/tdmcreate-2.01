@@ -19,9 +19,8 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: functions.php 10665 2012-12-27 10:14:15Z timgno $
  * @param mixed $folder
+ * @return bool|void
  */
 function tdmcreateClearDir($folder)
 {
@@ -30,7 +29,7 @@ function tdmcreateClearDir($folder)
         return;
     }
     while ($file = readdir($opening)) {
-        if ('.' == $file || '..' == $file) {
+        if ('.' === $file || '..' === $file) {
             continue;
         }
         if (is_dir($folder . '/' . $file)) {
@@ -73,13 +72,15 @@ function tdmcreateCopyRight($source, $dest)
     }
     // Make destination directory
     if (!is_dir($dest)) {
-        mkdir($dest);
+        if (!mkdir($dest) && !is_dir($dest)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dest));
+        }
     }
     // Loop through the folder
     $dir = dir($source);
     while (false !== $entry = $dir->read()) {
         // Skip pointers
-        if ('.' == $entry || '..' == $entry) {
+        if ('.' === $entry || '..' === $entry) {
             continue;
         }
         // Deep copy directories

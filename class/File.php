@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,16 +21,10 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: architecture.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 
 class File extends \XoopsFileHandler
 {

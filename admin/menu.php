@@ -9,6 +9,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * tdmcreate module.
  *
@@ -18,44 +19,71 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: menu.php 10665 2012-12-27 10:14:15Z timgno $
  */
-$adminmenu = [];
-$i = 0;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU1;
-$adminmenu[$i]['link'] = 'admin/index.php';
-$adminmenu[$i]['icon'] = 'dashboard.png';
-++$i;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU2;
-$adminmenu[$i]['link'] = 'admin/settings.php';
-$adminmenu[$i]['icon'] = 'settings.png';
-++$i;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU3;
-$adminmenu[$i]['link'] = 'admin/modules.php';
-$adminmenu[$i]['icon'] = 'addmodule.png';
-++$i;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU4;
-$adminmenu[$i]['link'] = 'admin/tables.php';
-$adminmenu[$i]['icon'] = 'addtable.png';
-++$i;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU5;
-$adminmenu[$i]['link'] = 'admin/fields.php';
-$adminmenu[$i]['icon'] = 'editfields.png';
-++$i;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU6;
-$adminmenu[$i]['link'] = 'admin/locales.php';
-$adminmenu[$i]['icon'] = 'languages.png';
-++$i;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU7;
-$adminmenu[$i]['link'] = 'admin/imports.php';
-$adminmenu[$i]['icon'] = 'import.png';
-++$i;
-$adminmenu[$i]['title'] = Tdmcreate\Locale::ADMIN_MENU8;
-$adminmenu[$i]['link'] = 'admin/building.php';
-$adminmenu[$i]['icon'] = 'builder.png';
-++$i;
-$adminmenu[$i]['title'] = XoopsLocale::ABOUT;
-$adminmenu[$i]['link'] = 'admin/about.php';
-$adminmenu[$i]['icon'] = 'about.png';
-unset($i);
+use XoopsModules\Tdmcreate;
+
+require dirname(__DIR__) . '/preloads/autoloader.php';
+
+/** @var \XoopsModules\Tdmcreate\Helper $helper */
+$helper = \XoopsModules\Tdmcreate\Helper::getInstance();
+//$helper->loadLanguage('common');
+
+// get path to icons
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU1,
+    'link' => 'admin/index.php',
+    'icon' => "{$pathIcon32}/dashboard.png",
+];
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU2,
+    'link' => 'admin/settings.php',
+    'icon' => "{$pathIcon32}/settings.png",
+];
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU3,
+    'link' => 'admin/modules.php',
+    'icon' => "{$pathIcon32}/addmodule.png",
+];
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU4,
+    'link' => 'admin/tables.php',
+    'icon' => "{$pathIcon32}/addtable.png",
+];
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU5,
+    'link' => 'admin/fields.php',
+    'icon' => "{$pathIcon32}/editfields.png",
+];
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU6,
+    'link' => 'admin/locales.php',
+    'icon' => "{$pathIcon32}/languages.png",
+];
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU7,
+    'link' => 'admin/imports.php',
+    'icon' => "{$pathIcon32}/import.png",
+];
+
+$adminmenu[] = [
+    'title' => \TdmcreateLocale::ADMIN_MENU8,
+    'link' => 'admin/building.php',
+    'icon' => "{$pathIcon32}/builder.png",
+];
+
+$adminmenu[] = [
+    'title' => \XoopsLocale::ABOUT,
+    'link' => 'admin/about.php',
+    'icon' => "{$pathIcon32}/about.png",
+];

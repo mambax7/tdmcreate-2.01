@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,15 +20,11 @@
  *
  * @since           2.5.7
  *
- * @author          Txmod Xoops <webmaster@txmodxoops.org> - <http://www.txmodxoops.org/>
- *
- * @version         $Id: morefiles.php 13080 2015-06-12 10:12:32Z timgno $
+ * @author          Txmod Xoops <webmaster@txmodxoops.org> - <http://www.txmodxoops.org>
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
-//include __DIR__ . '/autoload.php';
+//require __DIR__ . '/autoload.php';
 /*
 *  @Class MoreFiles
 *  @extends \XoopsObject
@@ -40,11 +38,11 @@ class MoreFilesHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * @public function constructor class
-     * @param null|object $db
+     * @param \Xoops\Core\Database\Connection $db
      */
-    public function __construct(&$db)
+    public function __construct(\Xoops\Core\Database\Connection $db)
     {
-        parent::__construct($db, 'tdmcreate_morefiles', 'tdmcreatemorefiles', 'file_id', 'file_name');
+        parent::__construct($db, 'tdmcreate_morefiles', Morefiles::class, 'file_id', 'file_name');
     }
 
     /**
@@ -110,7 +108,7 @@ class MoreFilesHandler extends \XoopsPersistableObjectHandler
      */
     public function getCountMoreFiles($start = 0, $limit = 0, $sort = 'file_id ASC, file_name', $order = 'ASC')
     {
-        $criteriaMoreFilesCount = new CriteriaCompo();
+        $criteriaMoreFilesCount = new \CriteriaCompo();
         $criteriaMoreFilesCount = $this->getMoreFilesCriteria($criteriaMoreFilesCount, $start, $limit, $sort, $order);
 
         return $this->getCount($criteriaMoreFilesCount);
@@ -126,7 +124,7 @@ class MoreFilesHandler extends \XoopsPersistableObjectHandler
      */
     public function getAllMoreFiles($start = 0, $limit = 0, $sort = 'file_id ASC, file_name', $order = 'ASC')
     {
-        $criteriaMoreFilesAdd = new CriteriaCompo();
+        $criteriaMoreFilesAdd = new \CriteriaCompo();
         $criteriaMoreFilesAdd = $this->getMoreFilesCriteria($criteriaMoreFilesAdd, $start, $limit, $sort, $order);
 
         return $this->getAll($criteriaMoreFilesAdd);
@@ -143,8 +141,8 @@ class MoreFilesHandler extends \XoopsPersistableObjectHandler
      */
     public function getAllMoreFilesByModuleId($modId, $start = 0, $limit = 0, $sort = 'file_id ASC, file_name', $order = 'ASC')
     {
-        $criteriaMoreFilesByModuleId = new CriteriaCompo();
-        $criteriaMoreFilesByModuleId->add(new Criteria('file_mid', $modId));
+        $criteriaMoreFilesByModuleId = new \CriteriaCompo();
+        $criteriaMoreFilesByModuleId->add(new \Criteria('file_mid', $modId));
         $criteriaMoreFilesByModuleId = $this->getMoreFilesCriteria($criteriaMoreFilesByModuleId, $start, $limit, $sort, $order);
 
         return $this->getAll($criteriaMoreFilesByModuleId);

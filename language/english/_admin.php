@@ -18,7 +18,6 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          TDM Xoops (AKA Developers)
- * @version         $Id: tables.php 10665 2012-12-27 10:14:15Z timgno $
  */
 //Menu
 //define("_AM_TDMCREATE_ADMIN_INDEX", "Index");
@@ -169,7 +168,7 @@
 //define("_AM_TDMCREATE_TABLE_NBFIELDS", "Number fields");
 //define("_AM_TDMCREATE_TABLE_NBFIELDS_DESC", "Number of fields for this table");
 //define("_AM_TDMCREATE_TABLE_FIELDNAME", "Field Name");
-//define("_AM_TDMCREATE_TABLE_FIELDNAME_DESC", "This is the prefix of field name (optional)<br />If you leave the field blank,<br />doesn't appear anything in the fields of the next screen,<br />otherwise you'll see all the fields with a prefix type (e.g: <span class='bold'>fieldname_</span>)");
+//define("_AM_TDMCREATE_TABLE_FIELDNAME_DESC", "This is the prefix of field name (optional)<br>If you leave the field blank,<br>doesn't appear anything in the fields of the next screen,<br>otherwise you'll see all the fields with a prefix type (e.g: <span class='bold'>fieldname_</span>)");
 //define("_AM_TDMCREATE_TABLE_IMAGE", "Table Logo");
 //define("_AM_TDMCREATE_TABLE_BLOCKS", "Create blocks for this table");
 //define("_AM_TDMCREATE_TABLE_BLOCKS_DESC", "(blocs: random, latest, today)");
@@ -295,7 +294,7 @@
 //define("_AM_TDMCREATE_MODULEADMIN_MISSING", "Module Admin Missing, Pleace! Install this Framework");
 //define("_AM_TDMCREATE_MODULE_DISPLAY_SUBMENU", "Visible Submenu");
 //define("_AM_TDMCREATE_MODULE_ACTIVE_NOTIFY", "Enable Notifications");
-//define("_AM_TDMCREATE_NOTINSERTED", "<span class='red bold'>The module is not saved,<br />it is likely that you have used a name that already exists,<br />please change name for a new module.</span>");
+//define("_AM_TDMCREATE_NOTINSERTED", "<span class='red bold'>The module is not saved,<br>it is likely that you have used a name that already exists,<br>please change name for a new module.</span>");
 
 //define("_AM_TDMCREATE_DELETE", "Delete");
 //define("_AM_TDMCREATE_UPLOADS", "Uploads");
@@ -307,7 +306,7 @@
 
 //Error NoFrameworks
 //define('_AM_MODULEADMIN_MISSING', "Error: You don&#39;t use the Frameworks \"admin module\". Please install this Frameworks");
-//define('_AM_TDMCREATE_MAINTAINEDBY', "<span class='bold green'>%s</span><span class='small italic'> is maintained by the </span><a href='%s' title='Visit %s' class='tooltip' rel='external'>%s</a><span class='small italic'> and by </span><a href='http://www.xoops.org/modules/newbb/' title='Visit Xoops Community' class='tooltip' rel='external'>Xoops Community</a>");
+//define('_AM_TDMCREATE_MAINTAINEDBY', "<span class='bold green'>%s</span><span class='small italic'> is maintained by the </span><a href='%s' title='Visit %s' class='tooltip' rel='external'>%s</a><span class='small italic'> and by </span><a href='https://www.xoops.org/modules/newbb/' title='Visit Xoops Community' class='tooltip' rel='external'>Xoops Community</a>");
 
 //define("_AM_TDMCREATE_IMPORT", "Import old module");
 //define("_AM_TDMCREATE_MODULE_IMPORT_TITLE", "Form Import old module");

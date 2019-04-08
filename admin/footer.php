@@ -19,7 +19,5 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: footer.php 10665 2012-12-27 10:14:15Z timgno $
  */
 $xoops->footer();

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate\Form;
+<?php
+
+namespace XoopsModules\Tdmcreate\Form;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,32 +21,29 @@
  * @since           2.6.0
  *
  * @author          Timgno <txmodxoops@gmail.com>
- *
- * @version         $Id: imports.php 10607 2012-12-30 00:36:57Z timgno $
  */
-
-
 use XoopsModules\Tdmcreate;
+
 class ImportsForm extends \Xoops\Form\ThemeForm
 {
     /**
-     * @param Tdmcreate\Imports|XoopsObject $obj
+     * @param Tdmcreate\Imports|\XoopsObject $obj
      */
-    public function __construct(Tdmcreate\Imports &$obj)
+    public function __construct(Tdmcreate\Imports $obj)
     {
-        $xoops = Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
 
-        parent::__construct(Tdmcreate\Locale::IMPORT_TITLE, 'form', false, 'post', true);
+        parent::__construct(\TdmcreateLocale::IMPORT_TITLE, 'form', false, 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
 
-        $this->addElement(new Xoops\Form\Text(XoopsLocale::NAME, 'import_name', 50, 255, $obj->getVar('import_name')), true);
+        $this->addElement(new \Xoops\Form\Text(\XoopsLocale::NAME, 'import_name', 50, 255, $obj->getVar('import_name')), true);
 
-        $filetray = new Xoops\Form\ElementTray('', '<br />');
-        $filetray->addElement(new Xoops\Form\File(XoopsLocale::A_UPLOAD, 'importfile', $xoops->getModuleConfig('maxuploadsize')));
-        $filetray->addElement(new Xoops\Form\Label(''));
+        $filetray = new \Xoops\Form\ElementTray('', '<br>');
+        $filetray->addElement(new \Xoops\Form\File(\XoopsLocale::A_UPLOAD, 'importfile', $xoops->getModuleConfig('maxuploadsize')));
+        $filetray->addElement(new \Xoops\Form\Label(''));
         $this->addElement($filetray);
 
-        $this->addElement(new Xoops\Form\Hidden('op', 'save'));
-        $this->addElement(new Xoops\Form\Button('', 'upload', XoopsLocale::A_SUBMIT, 'submit'));
+        $this->addElement(new \Xoops\Form\Hidden('op', 'save'));
+        $this->addElement(new \Xoops\Form\Button('', 'upload', \XoopsLocale::A_SUBMIT, 'submit'));
     }
 }

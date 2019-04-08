@@ -1,4 +1,7 @@
-<?php namespace XoopsModules\Tdmcreate\Files;
+<?php
+
+namespace XoopsModules\Tdmcreate\Files;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,22 +20,21 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          Timgno <txmodxoops@gmail.com>
- * @version         $Id: plugins.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
 
-defined('XOOPS_ROOT_PATH') || die("Restricted access");
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 class Plugins extends File
 {
     /**
      * Constructor
      *
-     * @param TDMCreateFile|null $file
+     * @param TDMCreate\File|null $file
      * @param string             $module
+     * @param string             $text
      */
-    public function __construct(TDMCreateFile $file = null, $module = '', $text = '')
+    public function __construct(TDMCreate\File $file = null, $module = '', $text = '')
     {
         if (isset($file)) {
             $this->create($file, $module);
@@ -47,6 +49,7 @@ class Plugins extends File
      */
     public function pluginSubMenu($module = null, $module_name = null)
     {
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
         $this->text[] = 'defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
@@ -66,12 +69,12 @@ class ' . ucfirst($module_name) . 'MenusPlugin extends \Xoops_Module_Plugin_Abst
 	 */
 	public function subMenus()
 	{
-		$ret = array();
-		$files = XoopsLists::getFileListAsArray(dirname(dirname(dirname(__FILE__))));
+		$ret = [];
+		$files = \XoopsLists::getFileListAsArray(dirname(dirname(__DIR__)));
 		$i = 0;
 		foreach ($files as $file) {
 			if (!in_array($file, array(\'xoops_version.php\', \'index.php\'))) {
-				$fileName = ucfirst(str_replace(\'.php\', '', $file));
+				$fileName = ucfirst(str_replace(\'.php\', \'\', $file));
 				$ret[$i][\'name\'] = $fileName;
 				$ret[$i][\'url\'] = $file;
 				$i++;
@@ -80,8 +83,9 @@ class ' . ucfirst($module_name) . 'MenusPlugin extends \Xoops_Module_Plugin_Abst
 		return $ret;
 	}
 }';
-		return $this->text;
-	}
+
+        return $this->text;
+    }
 
     /**
      * @param string $module
@@ -98,10 +102,10 @@ class ' . ucfirst($module_name) . 'SearchPlugin extends \Xoops_Module_Plugin_Abs
 {
 	public function search($queries, $andor, $limit, $start, $uid)
 	{
-		$queries = implode(' ', (array) $queries);
+		$queries = implode(\' \', (array) $queries);
 
-		$files = XoopsLists::getFileListAsArray(dirname(dirname(dirname(__FILE__))));
-		$res = array();
+		$files = \XoopsLists::getFileListAsArray(dirname(dirname(__DIR__)));
+		$res = [];
 		$i = 0;
 		foreach ($files as $file) {
 			if (!in_array($file, array(\'xoops_version.php\', \'index.php\'))) {
@@ -116,8 +120,9 @@ class ' . ucfirst($module_name) . 'SearchPlugin extends \Xoops_Module_Plugin_Abs
 		return $res;
 	}
 }';
-		return $this->text;
-	}
+
+        return $this->text;
+    }
 
     /**
      * @param string $module
@@ -126,7 +131,8 @@ class ' . ucfirst($module_name) . 'SearchPlugin extends \Xoops_Module_Plugin_Abs
      */
     public function pluginSystem($module = null, $module_name = null)
     {
-        $mod_name     = strtolower($module_name);
+        $mod_name = mb_strtolower($module_name);
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
         $this->text[] = 'defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
@@ -143,7 +149,7 @@ class ' . ucfirst($module_name) . 'SystemPlugin extends \Xoops_Module_Plugin_Abs
      */
     public function userPosts($uid)
     {
-        $xoops = Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         $count = count(XoopsLists::getFileListAsArray($xoops->path(\'modules/' . ucfirst($module_name) . '/\')))-2;
         return $count;
     }
@@ -160,7 +166,7 @@ class ' . ucfirst($module_name) . 'SystemPlugin extends \Xoops_Module_Plugin_Abs
      */
     public function waiting()
     {
-        $xoops = Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         $ret[\'count\'] = count(XoopsLists::getFileListAsArray($xoops->path(\'modules/' . $mod_name . '/\')))-2;
         $ret[\'name\'] = $xoops->getHandlerModule()->getBydirname(\'' . $mod_name . '\')->getVar(\'name\');
         $ret[\'link\'] = $xoops->url(\'modules/' . $mod_name . '/\');
@@ -182,11 +188,11 @@ class ' . ucfirst($module_name) . 'SystemPlugin extends \Xoops_Module_Plugin_Abs
      */
     public function backend($limit)
     {
-        $xoops = Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         $i=0;
         $ret=array();
 
-        $files = XoopsLists::getFileListAsArray($xoops->path(\'modules/' . $mod_name . '/\'));
+        $files = \XoopsLists::getFileListAsArray($xoops->path(\'modules/' . $mod_name . '/\'));
         foreach ($files as $file) {
             if (!in_array($file, array(\'xoops_version.php\', \'index.php\'))) {
                 $ret[$i][\'title\']   = ucfirst(str_replace(\'.php\', \'\', $file));
@@ -211,13 +217,14 @@ class ' . ucfirst($module_name) . 'SystemPlugin extends \Xoops_Module_Plugin_Abs
      */
     public function userMenus()
     {
-        /*$xoops = Xoops::getInstance();
-        $ret[\'name\'] = Xoops::getInstance()->getHandlerModule()->getBydirname(\'' . $mod_name . '\')->getVar(\'name\');
+        /*$xoops = \Xoops::getInstance();
+        $ret[\'name\'] = \Xoops::getInstance()->getHandlerModule()->getBydirname(\'' . $mod_name . '\')->getVar(\'name\');
         $ret[\'link\'] = \'index.php\';
         $ret[\'image\'] = $xoops->url(\'modules/' . $mod_name . '/icons/logo_small.png\');
         return $ret;*/
     }
 }';
+
         return $this->text;
     }
 
@@ -228,7 +235,8 @@ class ' . ucfirst($module_name) . 'SystemPlugin extends \Xoops_Module_Plugin_Abs
      */
     public function pluginUserconfigs($module = null, $module_name = null)
     {
-        $mod_name     = strtoupper($module_name);
+        $mod_name = mb_strtoupper($module_name);
+        $this->text = [];
         $this->text[] = '<?php';
         $this->text[] = TDMCreate\Files\Common::getCommonHeader($module);
         $this->text[] = 'defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
@@ -282,6 +290,7 @@ class ' . ucfirst($module_name) . 'UserconfigsPlugin extends \Xoops_Module_Plugi
         return $config;
     }
 }';
+
         return $this->text;
     }
 }

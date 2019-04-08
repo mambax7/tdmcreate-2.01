@@ -21,10 +21,8 @@ use Xoops\Core\Request;
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: building.php 10665 2012-12-27 10:14:15Z timgno $
  */
-include __DIR__ . '/header.php';
+require __DIR__ . '/header.php';
 // Get $_POST, $_GET, $_REQUEST
 $op = Request::getCmd('op', 'default');
 $mid = Request::getInt('mod_id');
@@ -32,27 +30,27 @@ $moduleObj = $modulesHandler->get($mid);
 // Header Template
 $xoops->header('admin:tdmcreate/tdmcreate_building.tpl');
 // Navigation
-$adminMenu->renderNavigation('building.php');
+$adminObject->renderNavigation('building.php');
 
 switch ($op) {
     case 'default':
     default:
-        $adminMenu->addTips(Tdmcreate\Locale::BUILDING_TIPS);
-        $adminMenu->renderTips();
+        $adminObject->addTips(\TdmcreateLocale::BUILDING_TIPS);
+        $adminObject->renderTips();
         $numbModules = $modulesHandler->getCountModules();
-        if (0 == $numbModules) {
-            $xoops->redirect('modules.php?op=new', 2, Tdmcreate\Locale::E_NO_MODULES);
+        if (0 === $numbModules) {
+            $xoops->redirect('modules.php?op=new', 2, \TdmcreateLocale::E_NO_MODULES);
         }
-        $form = new Xoops\Form\SimpleForm(Tdmcreate\Locale::BUILDING_TITLE, 'building', 'building.php', 'post', true);
+        $form = new \Xoops\Form\SimpleForm(\TdmcreateLocale::BUILDING_TITLE, 'building', 'building.php', 'post', true);
         unset($numbModules);
 
-        $modulesSelect = new Xoops\Form\Select(Tdmcreate\Locale::BUILDING_MODULES, 'mod_id', 'mod_id');
-        $modulesSelect->addOption(0, Tdmcreate\Locale::BUILDING_SELECT_DEFAULT);
+        $modulesSelect = new \Xoops\Form\Select(\TdmcreateLocale::BUILDING_MODULES, 'mod_id', 'mod_id');
+        $modulesSelect->addOption(0, \TdmcreateLocale::BUILDING_SELECT_DEFAULT);
         $modulesSelect->addOptionArray($modulesHandler->getList());
         $form->addElement($modulesSelect);
 
-        $form->addElement(new Xoops\Form\Hidden('op', 'build'));
-        $form->addElement(new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit'));
+        $form->addElement(new \Xoops\Form\Hidden('op', 'build'));
+        $form->addElement(new \Xoops\Form\Button('', 'submit', \XoopsLocale::A_SUBMIT, 'submit'));
         $xoops->tpl()->assign('form', $form->render());
         break;
     case 'build':
@@ -66,14 +64,14 @@ switch ($op) {
         }
         $toDir = XOOPS_ROOT_PATH . '/modules/' . mb_strtolower($moduleDirname);
         if (isset($moduleDirname)) {
-            $xoopsFile = XoopsFile::getHandler();
+            $xoopsFile = \XoopsFile::getHandler();
             $folder = $xoopsFile->getHandler('folder');
             $folder->delete($fromDir);
             $folder->delete($toDir);
         }
         // Structure
-        include_once TDMC_CLASSES_PATH . '/files/architecture.php';
-        $handler = TDMCreateArchitecture::getInstance();
+        require_once TDMC_DIRNAME . '/class/Files/architecture.php';
+        $handler = TDMCreate\Architecture::getInstance();
         // Creation of the structure of folders and files
         $baseArchitecture = $handler->createBaseFoldersFiles($moduleObj);
         if (false !== $baseArchitecture) {
@@ -95,19 +93,19 @@ switch ($op) {
         if (!$moduleObj->getVar('mod_isextension')) {
             $extension = 'extension';
             $extensions = 'extensions';
-            $xoops->tpl()->assign('building_directory', sprintf(Tdmcreate\Locale::BUILDING_DIRECTORY, $modules, $module, $moduleDirname));
+            $xoops->tpl()->assign('building_directory', sprintf(\TdmcreateLocale::BUILDING_DIRECTORY, $modules, $module, $moduleDirname));
         } else {
             $module = 'module';
             $modules = 'modules';
-            $xoops->tpl()->assign('building_directory', sprintf(Tdmcreate\Locale::BUILDING_DIRECTORY, $extensions, $extension, $moduleDirname));
+            $xoops->tpl()->assign('building_directory', sprintf(\TdmcreateLocale::BUILDING_DIRECTORY, $extensions, $extension, $moduleDirname));
         }
         // Copy this module in root modules
-        if (1 == $moduleObj->getVar('mod_inroot_copy')) {
-            $xoopsFile = XoopsFile::getHandler();
+        if (1 === $moduleObj->getVar('mod_inroot_copy')) {
+            $xoopsFile = \XoopsFile::getHandler();
             $folder = $xoopsFile->getHandler('folder', $fromDir);
             $folder->copy($toDir);
         }
         break;
 }
 
-include __DIR__ . '/footer.php';
+require __DIR__ . '/footer.php';

@@ -1,6 +1,6 @@
 <?php
 
-$xoops = Xoops::getInstance();
+$xoops = \Xoops::getInstance();
 $xoops::loadLocale();
 $path = dirname(__DIR__);
 $prefix = 'XoopsModules\\' . ucfirst(basename($path));

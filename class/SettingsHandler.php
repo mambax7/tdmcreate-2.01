@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,8 @@
  * @since           2.5.7
  *
  * @author          TDM TEAM DEV MODULE
- *
- * @version         $Id: settings.php 13070 2015-05-19 12:24:20Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 /**
  * Class SettingsHandler.
@@ -32,11 +30,11 @@ use Xoops\Core\Database\Connection;
 class SettingsHandler extends \XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param \Xoops\Core\Database\Connection $db
      */
-    public function __construct(&$db)
+    public function __construct(\Xoops\Core\Database\Connection $db)
     {
-        parent::__construct($db, 'tdmcreate_settings', 'tdmcreatesettings', 'set_id', 'set_name');
+        parent::__construct($db, 'tdmcreate_settings', Settings::class, 'set_id', 'set_name');
     }
 
     /**
@@ -46,7 +44,7 @@ class SettingsHandler extends \XoopsPersistableObjectHandler
      */
     public function create($isNew = true)
     {
-        return $this->create($isNew);
+        return parent::create($isNew);
     }
 
     /**
@@ -60,7 +58,7 @@ class SettingsHandler extends \XoopsPersistableObjectHandler
      */
     public function get($i = null, $fields = null)
     {
-        return $this->get($i, $fields);
+        return parent::get($i, $fields);
     }
 
     /**
@@ -85,7 +83,7 @@ class SettingsHandler extends \XoopsPersistableObjectHandler
      */
     public function getCountSettings($start = 0, $limit = 0, $sort = 'set_id ASC, set_name', $order = 'ASC')
     {
-        $criCountSettings = new CriteriaCompo();
+        $criCountSettings = new \CriteriaCompo();
         $criCountSettings = $this->getSettingsCriteria($criCountSettings, $start, $limit, $sort, $order);
 
         return $this->getCount($criCountSettings);
@@ -101,7 +99,7 @@ class SettingsHandler extends \XoopsPersistableObjectHandler
      */
     public function getAllSettings($start = 0, $limit = 0, $sort = 'set_id ASC, set_name', $order = 'ASC')
     {
-        $criAllSettings = new CriteriaCompo();
+        $criAllSettings = new \CriteriaCompo();
         $criAllSettings = $this->getSettingsCriteria($criAllSettings, $start, $limit, $sort, $order);
 
         return $this->getAll($criAllSettings);

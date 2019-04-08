@@ -18,7 +18,6 @@
  * @package         tdmcreate
  * @since           2.6.0
  * @author          TDM Xoops (AKA Developers)
- * @version         $Id: tables.php 10665 2012-12-27 10:14:15Z timgno $
  */
 //define("_MI_TDMCREATE_NAME", "TDMCreate");
 //define("_MI_TDMCREATE_DESC", "Creation modules developed by TDM Xoops");

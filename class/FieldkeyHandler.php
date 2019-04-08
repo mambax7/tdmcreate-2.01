@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tdmcreate;
+<?php
+
+namespace XoopsModules\Tdmcreate;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -19,12 +21,8 @@
  * @since           2.6.0
  *
  * @author          TDM Xoops (AKA Developers)
- *
- * @version         $Id: fieldkey.php 10665 2012-12-27 10:14:15Z timgno $
  */
-
 use XoopsModules\Tdmcreate;
-use Xoops\Core\Database\Connection;
 
 /**
  * Class FieldkeyHandler.
@@ -32,10 +30,10 @@ use Xoops\Core\Database\Connection;
 class FieldkeyHandler extends \XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param null|\Xoops\Core\Database\Connection $db
      */
-    public function __construct(XoopsDatabase $db = null)
+    public function __construct(\Xoops\Core\Database\Connection $db = null)
     {
-        parent::__construct($db, 'tdmcreate_fieldkey', 'tdmcreatefieldkey', 'fieldkey_id', 'fieldkey_name');
+        parent::__construct($db, 'tdmcreate_fieldkey', Fieldkey::class, 'fieldkey_id', 'fieldkey_name');
     }
 }

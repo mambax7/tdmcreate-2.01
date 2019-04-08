@@ -18,33 +18,36 @@
  * @since           2.5.5
  *
  * @author          Txmod Xoops <support@txmodxoops.org>
- *
- * @version         $Id: 1.59 settings.php 11297 2013-03-24 10:58:10Z timgno $
  */
-include __DIR__ . '/header.php';
+require __DIR__ . '/header.php';
+XoopsLoad::loadFile($xoops->path(dirname(__DIR__) . '/include/common.php'));
+$xoops->header('admin:tdmcreate/tdmcreate_settings.tpl');
+$adminObject->renderNavigation('settings.php');
+$xoops->tpl()->assign('pathIcon16', TDMC_URL . '/' . $pathIcon16);
+//$xoops->tpl()->assign('pathIcon16', TDMC_URL . '/assets/images/icons/16');
 // Recovered value of argument op in the URL $
-$op = XoopsRequest::getString('op', 'list');
+$op = \XoopsRequest::getString('op', 'list');
 
-$setId = XoopsRequest::getInt('set_id');
+$setId = \XoopsRequest::getInt('set_id');
 
 switch ($op) {
     case 'list':
     default:
-        $start = XoopsRequest::getInt('start', 0);
-        $limit = XoopsRequest::getInt('limit', $tdmcreate->getConfig('settings_adminpager'));
+        $start = \XoopsRequest::getInt('start', 0);
+        $limit = \XoopsRequest::getInt('limit', $helper->getConfig('settings_adminpager'));
         // Define main template
         $templateMain = 'tdmcreate_settings.tpl';
         $GLOBALS['xoTheme']->addScript('modules/tdmcreate/assets/js/functions.js');
         $GLOBALS['xoTheme']->addStylesheet('modules/tdmcreate/assets/css/admin/style.css');
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminMenu->addNavigation('settings.php'));
-        $adminMenu->addItemButton(_AM_TDMCREATE_ADD_SETTING, 'settings.php?op=new', 'add');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminMenu->renderButton());
-        $GLOBALS['xoopsTpl']->assign('tdmc_upload_imgmod_url', TDMC_UPLOAD_IMGMOD_URL);
-        $GLOBALS['xoopsTpl']->assign('tdmc_url', TDMC_URL);
-        $GLOBALS['xoopsTpl']->assign('modPathIcon16', TDMC_URL . '/' . $modPathIcon16);
-        $GLOBALS['xoopsTpl']->assign('sysPathIcon32', $sysPathIcon32);
-        $settingsCount = $tdmcreate->getHandler('settings')->getCountSettings();
-        $settingsAll = $tdmcreate->getHandler('settings')->getAllSettings($start, $limit);
+        $xoops->tpl()->assign('navigation', $adminObject->displayNavigation('settings.php'));
+        $adminObject->addItemButton(\TdmcreateLocale::ADD_SETTING, 'settings.php?op=new', 'add');
+        $xoops->tpl()->assign('buttons', $adminObject->displayButton());
+        $xoops->tpl()->assign('tdmc_upload_imgmod_url', TDMC_UPLOAD_IMAGES_MODULES_URL);
+        $xoops->tpl()->assign('tdmc_url', TDMC_URL);
+//        $xoops->tpl()->assign('pathIcon16', TDMC_URL . '/' . $pathIcon16);
+        $xoops->tpl()->assign('pathModIcon32', $pathModIcon32);
+        $settingsCount = $helper->getHandler('Settings')->getCountSettings();
+        $settingsAll = $helper->getHandler('Settings')->getAllSettings($start, $limit);
         // Display settings list
         if ($settingsCount > 0) {
             foreach (array_keys($settingsAll) as $i) {
@@ -53,34 +56,35 @@ switch ($op) {
                 unset($setting);
             }
             if ($settingsCount > $limit) {
-                include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-                $pagenav = new XoopsPageNav($settingsCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
-                $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav(4));
+                require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+                $pagenav = new \XoopsPageNav($settingsCount, $limit, $start, 'start', 'op=list&limit=' . $limit);
+                $xoops->tpl()->assign('pagenav', $pagenav->renderNav(4));
             }
         } else {
-            $GLOBALS['xoopsTpl']->assign('error', _AM_TDMCREATE_THEREARENT_SETTINGS);
+            $xoops->tpl()->assign('error', \TdmcreateLocale::THEREARENT_SETTINGS);
         }
         break;
     case 'new':
         // Define main template
         $templateMain = 'tdmcreate_settings.tpl';
         $GLOBALS['xoTheme']->addScript('modules/tdmcreate/assets/js/functions.js');
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminMenu->addNavigation('settings.php'));
-        $adminMenu->addItemButton(_AM_TDMCREATE_SETTINGS_LIST, 'settings.php', 'list');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminMenu->renderButton());
+        $xoops->tpl()->assign('navigation', $adminObject->displayNavigation('settings.php'));
+        $adminObject->addItemButton(\TdmcreateLocale::SETTINGS_LIST, 'settings.php', 'list');
+        $xoops->tpl()->assign('buttons', $adminObject->displayButton());
 
-        $settingsObj = &$tdmcreate->getHandler('settings')->create();
-        $form = $settingsObj->getFormSettings();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        $settingsObj = $helper->getHandler('Settings')->create();
+//        $form = $settingsObj->getFormSettings();
+        $form = new \XoopsModules\Tdmcreate\Form\SettingsForm($settingsObj);
+        $xoops->tpl()->assign('form', $form->render());
         break;
     case 'save':
         if ($GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('settings.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+            $xoops->redirect('settings.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         if (isset($setId)) {
-            $settingsObj = &$tdmcreate->getHandler('settings')->get($setId);
+            $settingsObj = $helper->getHandler('Settings')->get($setId);
         } else {
-            $settingsObj = &$tdmcreate->getHandler('settings')->create();
+            $settingsObj = $helper->getHandler('Settings')->create();
         }
         $setModuleDirname = preg_replace('/[^a-zA-Z0-9]\s+/', '', mb_strtolower($_POST['set_dirname']));
         //Form module save
@@ -120,7 +124,7 @@ switch ($op) {
                                   'set_donations' => $_POST['set_donations'],
                                   'set_subversion' => $_POST['set_subversion'],
                               ]);
-        $settingOption = XoopsRequest::getArray('setting_option', []);
+        $settingOption = \XoopsRequest::getArray('setting_option', []);
         $settingsObj->setVar('set_admin', in_array('admin', $settingOption, true));
         $settingsObj->setVar('set_user', in_array('user', $settingOption, true));
         $settingsObj->setVar('set_blocks', in_array('blocks', $settingOption, true));
@@ -132,50 +136,52 @@ switch ($op) {
 
         $settingsObj->setVar('set_type', $_POST['set_type']);
 
-        if ($tdmcreate->getHandler('settings')->insert($settingsObj)) {
-            redirect_header('settings.php', 5, sprintf(_AM_TDMCREATE_MODULE_FORM_UPDATED_OK, $_POST['set_name']));
+        if ($helper->getHandler('Settings')->insert($settingsObj)) {
+            $xoops->redirect('settings.php', 5, sprintf(\TdmcreateLocale::MODULE_FORM_UPDATED_OK, $_POST['set_name']));
         }
 
-        $GLOBALS['xoopsTpl']->assign('error', $settingsObj->getHtmlErrors());
-        $form = &$settingsObj->getFormSettings();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        $xoops->tpl()->assign('error', $settingsObj->getHtmlErrors());
+        //        $form = $settingsObj->getFormSettings();
+        $form = new \XoopsModules\Tdmcreate\Form\SettingsForm($settingsObj);
+        $xoops->tpl()->assign('form', $form->render());
         break;
     case 'edit':
         // Define main template
         $templateMain = 'tdmcreate_settings.tpl';
-        $GLOBALS['xoopsTpl']->assign('navigation', $adminMenu->addNavigation('settings.php'));
-        $adminMenu->addItemButton(_AM_TDMCREATE_ADD_SETTING, 'settings.php?op=new', 'add');
-        $adminMenu->addItemButton(_AM_TDMCREATE_SETTINGS_LIST, 'settings.php', 'list');
-        $GLOBALS['xoopsTpl']->assign('buttons', $adminMenu->renderButton());
-        $settingsObj = $tdmcreate->getHandler('settings')->get($setId);
-        $form = $settingsObj->getFormSettings();
-        $GLOBALS['xoopsTpl']->assign('form', $form->render());
+        $xoops->tpl()->assign('navigation', $adminObject->displayNavigation('settings.php'));
+        $adminObject->addItemButton(\TdmcreateLocale::ADD_SETTING, 'settings.php?op=new', 'add');
+        $adminObject->addItemButton(\TdmcreateLocale::SETTINGS_LIST, 'settings.php', 'list');
+        $xoops->tpl()->assign('buttons', $adminObject->displayButton());
+        $settingsObj = $helper->getHandler('Settings')->get($setId);
+        //        $form = $settingsObj->getFormSettings();
+        $form = new \XoopsModules\Tdmcreate\Form\SettingsForm($settingsObj);
+        $xoops->tpl()->assign('form', $form->render());
         break;
     case 'delete':
-        $settingsObj = &$tdmcreate->getHandler('settings')->get($setId);
-        if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
+        $settingsObj = $helper->getHandler('Settings')->get($setId);
+        if (isset($_REQUEST['ok']) && 1 === $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
-                redirect_header('settings.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+                $xoops->redirect('settings.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($tdmcreate->getHandler('settings')->delete($settingsObj)) {
-                redirect_header('settings.php', 3, _AM_TDMCREATE_FORMDELOK);
+            if ($helper->getHandler('Settings')->delete($settingsObj)) {
+                $xoops->redirect('settings.php', 3, \TdmcreateLocale::FORMDELOK);
             } else {
-                $GLOBALS['xoopsTpl']->assign('error', $settingsObj->getHtmlErrors());
+                $xoops->tpl()->assign('error', $settingsObj->getHtmlErrors());
             }
         } else {
-            xoops_confirm(['ok' => 1, 'set_id' => $setId, 'op' => 'delete'], $_SERVER['REQUEST_URI'], sprintf(_AM_TDMCREATE_FORMSUREDEL, $settingsObj->getVar('set_name')));
+            $xoops->confirm(['ok' => 1, 'set_id' => $setId, 'op' => 'delete'], $_SERVER['REQUEST_URI'], sprintf(\TdmcreateLocale::FORMSUREDEL, $settingsObj->getVar('set_name')));
         }
         break;
     case 'display':
-        $id = XoopsRequest::getInt('set_id', 0, 'POST');
+        $id = \XoopsRequest::getInt('set_id', 0, 'POST');
         if ($id > 0) {
-            $settingsObj = $tdmcreate->getHandler('settings')->get($id);
+            $settingsObj = $helper->getHandler('Settings')->get($id);
             if (isset($_POST['set_type'])) {
                 $setType = $settingsObj->getVar('set_type');
                 $settingsObj->setVar('set_type', !$setType);
             }
-            $GLOBALS['xoopsTpl']->assign('error', $settingsObj->getHtmlErrors());
+            $xoops->tpl()->assign('error', $settingsObj->getHtmlErrors());
         }
         break;
 }
-include __DIR__ . '/footer.php';
+require __DIR__ . '/footer.php';
